@@ -1,30 +1,43 @@
 package ee.ttu.model;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by Vahur Kaar on 20.09.2014.
  */
 @Entity
-@Table(name = "CUSTOMER", schema = "public")
-public class Customer implements Serializable {
+@Table(name = "customer", schema = "public")
+public class Customer extends PersistentObject {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "customer_seq")
+    @SequenceGenerator(name = "customer_seq", sequenceName = "customer_id", schema = "public")
+    @Column(name = "customer")
     private Long id;
 
-    @Column(name = "USERNAME")
-    private String username;
-
-    @Column(name = "FIRST_NAME")
+    @Column(name = "first_name")
     private String firstname;
 
-    @Column(name = "LAST_NAME")
+    @Column(name = "last_name")
     private String lastname;
 
-    @Column(name = "PASS")
-    private String password;
+    @Column(name = "identity_code")
+    private String identityCode;
+
+    @Column(name = "note")
+    private String note;
+
+    @Column(name = "birth_date")
+    private Date birthDate;
+
+    @ManyToOne
+    @JoinColumn(name = "cst_state_type", referencedColumnName = "cst_state_type")
+    private CustomerStateType customerStateType;
+
+    @ManyToOne
+    @JoinColumn(name = "cst_type", referencedColumnName = "cst_type")
+    private CustomerType customerType;
 
     public Long getId() {
         return id;
@@ -32,14 +45,6 @@ public class Customer implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getFirstname() {
@@ -58,11 +63,43 @@ public class Customer implements Serializable {
         this.lastname = lastname;
     }
 
-    public String getPassword() {
-        return password;
+    public String getIdentityCode() {
+        return identityCode;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setIdentityCode(String identityCode) {
+        this.identityCode = identityCode;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public CustomerStateType getCustomerStateType() {
+        return customerStateType;
+    }
+
+    public void setCustomerStateType(CustomerStateType customerStateType) {
+        this.customerStateType = customerStateType;
+    }
+
+    public CustomerType getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(CustomerType customerType) {
+        this.customerType = customerType;
     }
 }
