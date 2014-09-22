@@ -1,6 +1,7 @@
 package ee.ttu.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class Customer extends PersistentObject {
     @JoinColumn(name = "cst_type")
     private CustomerType customerType;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer")
     private List<CustomerAddress> addresses;
 
@@ -109,6 +110,9 @@ public class Customer extends PersistentObject {
     }
 
     public List<CustomerAddress> getAddresses() {
+        if (addresses == null) {
+            addresses = new ArrayList<>();
+        }
         return addresses;
     }
 

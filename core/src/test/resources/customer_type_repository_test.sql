@@ -1,0 +1,1 @@
+insert into public.cst_type (cst_type, name) values (1, 'Edasimüüja'), (2, 'Partner'), (3, 'Klient'), (4, 'Suurklient');

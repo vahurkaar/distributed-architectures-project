@@ -1,31 +1,17 @@
 package ee.ttu.repository;
 
-import ee.ttu.configuration.PersistenceConfiguration;
 import ee.ttu.model.Customer;
+import ee.ttu.model.CustomerAddress;
 import ee.ttu.model.CustomerStateType;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.springframework.test.context.transaction.BeforeTransaction;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.util.List;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class,
-        classes = {PersistenceConfiguration.class, EmbeddedDatasourceConfiguration.class})
-@TransactionConfiguration(transactionManager = "transactionManager")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class CustomerRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
+public class CustomerRepositoryTest extends RepositoryTestSupport {
 
     @Autowired
     private DataSource dataSource;
@@ -36,15 +22,13 @@ public class CustomerRepositoryTest extends AbstractTransactionalJUnit4SpringCon
     @Autowired
     private CustomerStateTypeRepository customerStateTypeRepository;
 
-    @BeforeTransaction
+    @Before
     public void setUp() throws Exception {
         executeSqlScript("customer_repository_test.sql", false);
     }
 
     @Test
-    @Transactional
-    @Rollback
-    public void testSavingTest() throws Exception {
+    public void testSavingSimpleCustomer() throws Exception {
         CustomerStateType customerStateType = customerStateTypeRepository.findOne(1L);
         Customer customer = new Customer();
         customer.setFirstname("toomas");
@@ -63,8 +47,45 @@ public class CustomerRepositoryTest extends AbstractTransactionalJUnit4SpringCon
     }
 
     @Test
-    @Transactional
-    @Rollback
+    public void testSavingNewCustomerWithAddresses() throws Exception {
+        Customer customer = new Customer();
+        customer.setFirstname("Paul");
+        customer.setLastname("Pihelgas");
+        customer.setIdentityCode("111");
+
+        CustomerAddress customerAddress = new CustomerAddress();
+        customerAddress.setEmail("email.com");
+        customer.getAddresses().add(customerAddress);
+
+        customerAddress = new CustomerAddress();
+        customerAddress.setZip("zipcode");
+        customer.getAddresses().add(customerAddress);
+
+        customerRepository.save(customer);
+
+        Customer savedCustomer = customerRepository.findByNameLikeOrIdentityCode(null, "111").get(0);
+
+        Assert.assertNotNull(savedCustomer);
+        Assert.assertEquals(2, savedCustomer.getAddresses().size());
+        Assert.assertEquals(new Long(3), savedCustomer.getAddresses().get(0).getId());
+        Assert.assertEquals("email.com", savedCustomer.getAddresses().get(0).getEmail());
+        Assert.assertEquals(new Long(4), savedCustomer.getAddresses().get(1).getId());
+        Assert.assertEquals("zipcode", savedCustomer.getAddresses().get(1).getZip());
+    }
+
+    @Test
+    public void testSavingExistingCustomerAndRemovingAnAddress() throws Exception {
+        Customer existingCustomer = customerRepository.findOne(1L);
+
+        existingCustomer.getAddresses().remove(0);
+        customerRepository.save(existingCustomer);
+
+        Customer updatedCustomer = customerRepository.findOne(1L);
+        Assert.assertEquals(1, updatedCustomer.getAddresses().size());
+        Assert.assertEquals("zip 2", updatedCustomer.getAddresses().get(0).getZip());
+    }
+
+    @Test
     public void testFindByNameAndIdentityCode() throws Exception {
         List<Customer> customers = customerRepository.findByNameLikeOrIdentityCode("VaH", "123");
         Customer customer = customers.get(0);
@@ -73,14 +94,12 @@ public class CustomerRepositoryTest extends AbstractTransactionalJUnit4SpringCon
     }
 
     @Test
-    @Transactional
-    @Rollback
     public void testCustomerHasAddresses() throws Exception {
         Customer customer = customerRepository.findOne(1L);
 
         Assert.assertNotNull(customer);
         Assert.assertEquals(2, customer.getAddresses().size());
-        Assert.assertEquals(customer.getId(), customer.getAddresses().get(0).getCustomerId());
-        Assert.assertEquals(customer.getId(), customer.getAddresses().get(1).getCustomerId());
+        Assert.assertEquals(new Long(1), customer.getAddresses().get(0).getId());
+        Assert.assertEquals(new Long(2), customer.getAddresses().get(1).getId());
     }
 }

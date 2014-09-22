@@ -1,5 +1,6 @@
 package ee.ttu.repository;
 
+import ee.ttu.model.CustomerStateType;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 
@@ -27,5 +28,13 @@ public interface ClassifierRepository<T, ID extends Serializable> extends Reposi
      * @return all entities
      */
     List<T> findAll();
+
+    /**
+     * Find the classifier by the name field
+     *
+     * @param name Classifier value
+     * @return The classifier instance
+     */
+    T findByName(String name);
 
 }

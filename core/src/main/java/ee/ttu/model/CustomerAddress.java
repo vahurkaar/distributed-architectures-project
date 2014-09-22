@@ -15,9 +15,6 @@ public class CustomerAddress extends PersistentObject {
     @Column(name = "cst_address")
     private Long id;
 
-    @Column(name = "customer")
-    private Long customerId;
-
     @Column(name = "zip")
     private String zip;
 
@@ -64,14 +61,6 @@ public class CustomerAddress extends PersistentObject {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
     }
 
     public String getZip() {
