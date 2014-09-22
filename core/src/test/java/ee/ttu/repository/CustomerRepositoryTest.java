@@ -71,4 +71,16 @@ public class CustomerRepositoryTest extends AbstractTransactionalJUnit4SpringCon
         Assert.assertEquals("Vahur", customer.getFirstname());
         Assert.assertEquals("123", customer.getIdentityCode());
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testCustomerHasAddresses() throws Exception {
+        Customer customer = customerRepository.findOne(1L);
+
+        Assert.assertNotNull(customer);
+        Assert.assertEquals(2, customer.getAddresses().size());
+        Assert.assertEquals(customer.getId(), customer.getAddresses().get(0).getCustomerId());
+        Assert.assertEquals(customer.getId(), customer.getAddresses().get(1).getCustomerId());
+    }
 }

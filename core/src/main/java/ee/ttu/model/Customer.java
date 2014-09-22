@@ -2,6 +2,7 @@ package ee.ttu.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Vahur Kaar on 20.09.2014.
@@ -30,14 +31,18 @@ public class Customer extends PersistentObject {
 
     @Column(name = "birth_date")
     private Date birthDate;
-
+    
     @ManyToOne
-    @JoinColumn(name = "cst_state_type", referencedColumnName = "cst_state_type")
+    @JoinColumn(name = "cst_state_type")
     private CustomerStateType customerStateType;
 
     @ManyToOne
-    @JoinColumn(name = "cst_type", referencedColumnName = "cst_type")
+    @JoinColumn(name = "cst_type")
     private CustomerType customerType;
+
+    @OneToMany
+    @JoinColumn(name = "customer")
+    private List<CustomerAddress> addresses;
 
     public Long getId() {
         return id;
@@ -101,5 +106,13 @@ public class Customer extends PersistentObject {
 
     public void setCustomerType(CustomerType customerType) {
         this.customerType = customerType;
+    }
+
+    public List<CustomerAddress> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<CustomerAddress> addresses) {
+        this.addresses = addresses;
     }
 }

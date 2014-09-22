@@ -4,6 +4,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Vahur Kaar on 20.09.2014.
@@ -25,6 +26,6 @@ public interface ClassifierRepository<T, ID extends Serializable> extends Reposi
      *
      * @return all entities
      */
-    Iterable<T> findAll();
+    List<T> findAll();
 
 }
