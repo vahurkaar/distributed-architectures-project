@@ -1,0 +1,95 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:h="http://www.ttu.ee/hajusarhitektuurid"
+           elementFormDefault="qualified"
+           targetNamespace="http://www.ttu.ee/hajusarhitektuurid">
+    
+    <xs:element name="GetCustomersRequest">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="id" type="xs:long" />
+                <xs:element name="identityCode" type="xs:string" />
+                <xs:element name="name" type="xs:string" />
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCustomersResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customer" type="h:CustomerType" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="SaveCustomerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customer" type="h:CustomerType" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="SaveCustomerResponse" type="h:ResponseType" />
+
+    <xs:element name="DeleteCustomerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteCustomerResponse" type="h:ResponseType" />
+
+    <xs:complexType name="ResponseType">
+        <xs:sequence>
+            <xs:element name="responseCode" type="xs:string" />
+            <xs:element name="description" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CustomerType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" minOccurs="0" />
+            <xs:element name="firstname" type="xs:string" minOccurs="0" />
+            <xs:element name="lastname" type="xs:string" minOccurs="0" />
+            <xs:element name="identityCode" type="xs:string" minOccurs="0" />
+            <xs:element name="note" type="xs:string" minOccurs="0" />
+            <xs:element name="birthDate" type="h:dateISO" minOccurs="0" />
+            <xs:element name="customerStatusType" type="xs:long" minOccurs="0" />
+            <xs:element name="customerType" type="xs:long" minOccurs="0" />
+            <xs:element name="addresses" minOccurs="0" >
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="address" type="h:AddressType" minOccurs="0" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="modifier" type="xs:long" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="dateISO">
+        <xs:restriction base="xs:date">
+            <xs:pattern value="[^:Z]*" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="AddressType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" minOccurs="0" />
+            <xs:element name="zip" type="xs:string" minOccurs="0" />
+            <xs:element name="house" type="xs:string" minOccurs="0" />
+            <xs:element name="address" type="xs:string" minOccurs="0" />
+            <xs:element name="county" type="xs:string" minOccurs="0" />
+            <xs:element name="parish" type="xs:string" minOccurs="0" />
+            <xs:element name="townCity" type="xs:string" minOccurs="0" />
+            <xs:element name="phone" type="xs:string" minOccurs="0" />
+            <xs:element name="sms" type="xs:string" minOccurs="0" />
+            <xs:element name="mobile" type="xs:string" minOccurs="0" />
+            <xs:element name="email" type="xs:string" minOccurs="0" />
+            <xs:element name="note" type="xs:string" minOccurs="0" />
+            <xs:element name="country" type="xs:long" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
