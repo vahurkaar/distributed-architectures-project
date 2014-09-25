@@ -4,7 +4,6 @@ import ee.ttu.model.Customer;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,7 +12,9 @@ import java.util.List;
  */
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
-    @Query("select c from Customer c where trim(lower(concat(c.firstname, ' ', c.lastname))) like :name or c.identityCode = :identityCode")
+    @Query("select c from Customer c " +
+           "where trim(lower(concat(c.firstname, ' ', c.lastname))) like lower(concat('%', :name, '%')) or " +
+                 "c.identityCode = :identityCode")
     List<Customer> findByNameLikeOrIdentityCode(@Param("name") String name,
                                                 @Param("identityCode") String identityCode);
 
