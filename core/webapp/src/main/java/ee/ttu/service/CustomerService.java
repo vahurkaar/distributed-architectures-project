@@ -15,8 +15,8 @@ public interface CustomerService {
 
     GetCustomersResponse getCustomers(GetCustomersRequest request);
 
-    ResponseType saveCustomer(SaveCustomerRequest request);
+    SaveCustomerResponse saveCustomer(SaveCustomerRequest request);
 
-    ResponseType deleteCustomer(DeleteCustomerRequest request);
+    DeleteCustomerResponse deleteCustomer(DeleteCustomerRequest request);
 
 }

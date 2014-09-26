@@ -27,11 +27,21 @@ public class PersistentObject {
 
     @PrePersist
     protected void onCreate() {
+        if (createdBy == null && updatedBy != null) {
+            createdBy = updatedBy;
+            updatedBy = null;
+        }
+
         created = new Timestamp(new Date().getTime());
     }
 
     @PreUpdate
     protected void onUpdate() {
+        if (updatedBy != null && createdBy == null) {
+            createdBy = updatedBy;
+            updatedBy = null;
+        }
+
         updated = new Timestamp(new Date().getTime());
     }
 

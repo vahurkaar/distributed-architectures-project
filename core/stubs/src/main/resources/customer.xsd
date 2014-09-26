@@ -29,7 +29,14 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="SaveCustomerResponse" type="h:ResponseType" />
+    <xs:element name="SaveCustomerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="responseCode" type="xs:string" />
+                <xs:element name="description" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
     <xs:element name="DeleteCustomerRequest">
         <xs:complexType>
@@ -39,14 +46,14 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="DeleteCustomerResponse" type="h:ResponseType" />
-
-    <xs:complexType name="ResponseType">
-        <xs:sequence>
-            <xs:element name="responseCode" type="xs:string" />
-            <xs:element name="description" type="xs:string" />
-        </xs:sequence>
-    </xs:complexType>
+    <xs:element name="DeleteCustomerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="responseCode" type="xs:string" />
+                <xs:element name="description" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
     <xs:complexType name="CustomerType">
         <xs:sequence>

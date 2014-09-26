@@ -24,6 +24,10 @@ public class CustomerConverter implements Converter<Customer, CustomerType> {
 
     @Override
     public CustomerType convert(Customer source) {
+        if (source == null) {
+            return null;
+        }
+
         CustomerType customerType = OBJECT_FACTORY.createCustomerType();
         customerType.setId(source.getId());
         customerType.setFirstname(source.getFirstname());

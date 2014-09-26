@@ -16,6 +16,10 @@ public class CustomerAddressConverter implements Converter<CustomerAddress, Addr
 
     @Override
     public AddressType convert(CustomerAddress source) {
+        if (source == null) {
+            return null;
+        }
+
         AddressType addressType = OBJECT_FACTORY.createAddressType();
         addressType.setId(source.getId());
         addressType.setZip(source.getZip());

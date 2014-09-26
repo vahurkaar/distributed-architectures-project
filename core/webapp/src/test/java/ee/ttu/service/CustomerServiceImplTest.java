@@ -5,7 +5,6 @@ import ee.ttu.repository.RepositoryTestSupport;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ClassPathResource;
@@ -17,7 +16,6 @@ import org.springframework.ws.test.server.MockWebServiceClient;
 import org.springframework.xml.transform.ResourceSource;
 
 import javax.xml.transform.Source;
-
 import java.io.IOException;
 
 import static org.springframework.ws.test.server.RequestCreators.withPayload;
@@ -36,7 +34,6 @@ public class CustomerServiceImplTest extends RepositoryTestSupport {
 
     @Before
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
         client = MockWebServiceClient.createClient(applicationContext);
         executeSqlScript("services_test.sql", false);
     }
@@ -54,6 +51,26 @@ public class CustomerServiceImplTest extends RepositoryTestSupport {
     @Test
     public void testGetCustomerByName() throws Exception {
         executeServiceTest("GetCustomerByName");
+    }
+
+    @Test
+    public void testSaveCustomerSuccess() throws Exception {
+        executeServiceTest("SaveCustomerSuccess");
+    }
+
+    @Test
+    public void testSaveCustomerThrowsException() throws Exception {
+        executeServiceTest("SaveCustomerThrowsException");
+    }
+
+    @Test
+    public void testDeleteCustomerSuccess() throws Exception {
+        executeServiceTest("DeleteCustomerSuccess");
+    }
+
+    @Test
+    public void testDeleteCustomerThrowsException() throws Exception {
+        executeServiceTest("DeleteCustomerThrowsException");
     }
 
     private void executeServiceTest(String testCase) throws IOException {

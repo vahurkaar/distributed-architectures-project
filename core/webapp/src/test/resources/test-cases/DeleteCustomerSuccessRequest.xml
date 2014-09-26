@@ -1,0 +1,4 @@
+<ns2:DeleteCustomerRequest xmlns:ns2="http://www.ttu.ee/hajusarhitektuurid">
+    <ns2:id>1</ns2:id>
+</ns2:DeleteCustomerRequest>
+

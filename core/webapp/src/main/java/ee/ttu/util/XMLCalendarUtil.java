@@ -11,6 +11,10 @@ import java.util.Date;
  */
 public class XMLCalendarUtil {
 
+    public static Date xmlCalendarToDate(XMLGregorianCalendar calendar) {
+        return calendar.toGregorianCalendar().getTime();
+    }
+
     public static XMLGregorianCalendar dateToXmlCalendar(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);

@@ -1,0 +1,5 @@
+<ns2:DeleteCustomerResponse xmlns:ns2="http://www.ttu.ee/hajusarhitektuurid">
+    <ns2:responseCode>OK</ns2:responseCode>
+    <ns2:description>Successfully deleted customer!</ns2:description>
+</ns2:DeleteCustomerResponse>
+

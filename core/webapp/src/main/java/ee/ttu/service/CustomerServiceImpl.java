@@ -1,11 +1,10 @@
 package ee.ttu.service;
 
 import ee.ttu.converter.CustomerConverter;
+import ee.ttu.converter.CustomerTypeConverter;
 import ee.ttu.model.Customer;
 import ee.ttu.repository.CustomerRepository;
 import ee.ttu.xml.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -20,13 +19,14 @@ import java.util.List;
 @Endpoint
 public class CustomerServiceImpl implements CustomerService {
 
-    private Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
-
-    private static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
-
+    @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
     private CustomerConverter customerConverter;
+
+    @Autowired
+    private CustomerTypeConverter customerTypeConverter;
 
     @PayloadRoot(namespace = NAMESPACE, localPart = GET_CUSTOMERS_REQUEST)
     @ResponsePayload
@@ -56,24 +56,31 @@ public class CustomerServiceImpl implements CustomerService {
     @PayloadRoot(namespace = NAMESPACE, localPart = SAVE_CUSTOMER_REQUEST)
     @ResponsePayload
     @Override
-    public ResponseType saveCustomer(@RequestPayload SaveCustomerRequest request) {
-        return null;
+    public SaveCustomerResponse saveCustomer(@RequestPayload SaveCustomerRequest request) {
+        SaveCustomerResponse saveCustomerResponse = new SaveCustomerResponse();
+
+        Customer customer = customerTypeConverter.convert(request.getCustomer());
+        customerRepository.save(customer);
+
+        saveCustomerResponse.setResponseCode("OK");
+        saveCustomerResponse.setDescription("Successfully saved customer!");
+
+        return saveCustomerResponse;
     }
 
     @PayloadRoot(namespace = NAMESPACE, localPart = DELETE_CUSTOMER_REQUEST)
     @ResponsePayload
     @Override
-    public ResponseType deleteCustomer(@RequestPayload DeleteCustomerRequest request) {
-        return null;
+    public DeleteCustomerResponse deleteCustomer(@RequestPayload DeleteCustomerRequest request) {
+        DeleteCustomerResponse deleteCustomerResponse = new DeleteCustomerResponse();
+        Long id = request.getId();
+
+        customerRepository.delete(id);
+
+        deleteCustomerResponse.setResponseCode("OK");
+        deleteCustomerResponse.setDescription("Successfully deleted customer!");
+
+        return deleteCustomerResponse;
     }
 
-    @Autowired
-    public void setCustomerRepository(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
-
-    @Autowired
-    public void setCustomerConverter(CustomerConverter customerConverter) {
-        this.customerConverter = customerConverter;
-    }
 }
