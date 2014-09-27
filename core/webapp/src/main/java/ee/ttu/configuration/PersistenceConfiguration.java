@@ -3,7 +3,6 @@ package ee.ttu.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -12,6 +11,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -23,10 +23,10 @@ import java.util.Properties;
 public class PersistenceConfiguration {
 
     @Autowired
-    private Environment environment;
+    private DataSource dataSource;
 
     @Autowired
-    private DataSource dataSource;
+    private Properties jpaProperties;
 
     @Bean
     public JpaVendorAdapter jpaVendorAdapter() {
@@ -34,29 +34,18 @@ public class PersistenceConfiguration {
     }
 
     @Bean
-    public Properties jpaProperties() {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.dialect", environment.getProperty("hibernate.dialect"));
-        properties.setProperty("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
-        properties.setProperty("hibernate.format_sql", environment.getProperty("hibernate.format_sql"));
-        properties.setProperty("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
-
-        return properties;
-    }
-
-    @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws IOException {
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         localContainerEntityManagerFactoryBean.setDataSource(dataSource);
         localContainerEntityManagerFactoryBean.setPackagesToScan("ee.ttu.model");
         localContainerEntityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter());
-        localContainerEntityManagerFactoryBean.setJpaProperties(jpaProperties());
+        localContainerEntityManagerFactoryBean.setJpaProperties(jpaProperties);
 
         return localContainerEntityManagerFactoryBean;
     }
 
     @Bean
-    public JpaTransactionManager transactionManager() {
+    public JpaTransactionManager transactionManager() throws IOException {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;

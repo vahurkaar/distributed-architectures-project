@@ -1,4 +1,4 @@
-package ee.ttu.service;
+package ee.ttu.endpoints;
 
 import ee.ttu.configuration.ServiceConfiguration;
 import ee.ttu.repository.RepositoryTestSupport;
@@ -59,6 +59,16 @@ public class CustomerServiceImplTest extends RepositoryTestSupport {
     }
 
     @Test
+    public void testSaveCustomerExists() throws Exception {
+        executeServiceTest("SaveCustomerExists");
+    }
+
+    @Test
+    public void testSaveCustomerWithIdExistsRequest() throws Exception {
+        executeServiceTest("SaveCustomerWithIdExists");
+    }
+
+    @Test
     public void testSaveCustomerThrowsException() throws Exception {
         executeServiceTest("SaveCustomerThrowsException");
     }
@@ -70,8 +80,9 @@ public class CustomerServiceImplTest extends RepositoryTestSupport {
 
     @Test
     public void testDeleteCustomerThrowsException() throws Exception {
-        executeServiceTest("DeleteCustomerThrowsException");
+        executeServiceTest("DeleteCustomerDoesNotExist");
     }
+
 
     private void executeServiceTest(String testCase) throws IOException {
         Source request = new ResourceSource(new ClassPathResource("test-cases/" + testCase + "Request.xml"));

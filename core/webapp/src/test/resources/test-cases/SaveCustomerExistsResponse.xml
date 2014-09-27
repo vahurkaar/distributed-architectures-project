@@ -1,0 +1,5 @@
+<ns2:SaveCustomerResponse xmlns:ns2="http://www.ttu.ee/hajusarhitektuurid">
+    <ns2:responseCode>NOT OK</ns2:responseCode>
+    <ns2:description>Customer with identity code (123) already exists!</ns2:description>
+</ns2:SaveCustomerResponse>
+

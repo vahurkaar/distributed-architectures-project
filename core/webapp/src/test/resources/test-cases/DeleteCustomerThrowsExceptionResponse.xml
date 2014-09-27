@@ -1,6 +1,0 @@
-<SOAP-ENV:Fault xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
-    <faultcode>SOAP-ENV:Server</faultcode>
-    <faultstring xml:lang="en">
-        No class ee.ttu.model.Customer entity with id 0 exists!
-    </faultstring>
-</SOAP-ENV:Fault>

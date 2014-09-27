@@ -1,4 +1,4 @@
-package ee.ttu.service;
+package ee.ttu.endpoints;
 
 import ee.ttu.converter.CustomerConverter;
 import ee.ttu.converter.CustomerTypeConverter;
@@ -34,20 +34,23 @@ public class CustomerServiceImpl implements CustomerService {
     public GetCustomersResponse getCustomers(@RequestPayload GetCustomersRequest request) {
         GetCustomersResponse getCustomersResponse = new GetCustomersResponse();
 
+        Customer singleCustomer = null;
         if (request.getId() != null) {
-            Customer customer = customerRepository.findOne(request.getId());
-
-            if (customer != null) {
-                getCustomersResponse.getCustomer().add(customerConverter.convert(customer));
-                return getCustomersResponse;
-            }
+            singleCustomer = customerRepository.findOne(request.getId());
+        } else if (request.getIdentityCode() != null) {
+            singleCustomer = customerRepository.findByIdentityCode(request.getIdentityCode());
         }
 
-        List<Customer> customers = customerRepository
-                .findByNameLikeOrIdentityCode(request.getName(), request.getIdentityCode());
+        if (singleCustomer != null) {
+            getCustomersResponse.getCustomer().add(customerConverter.convert(singleCustomer));
+            return getCustomersResponse;
+        }
 
-        for (Customer customer : customers) {
-            getCustomersResponse.getCustomer().add(customerConverter.convert(customer));
+        if (request.getName() != null) {
+            List<Customer> customers = customerRepository.findByNameLike(request.getName());
+            for (Customer customer : customers) {
+                getCustomersResponse.getCustomer().add(customerConverter.convert(customer));
+            }
         }
 
         return getCustomersResponse;
@@ -58,14 +61,29 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public SaveCustomerResponse saveCustomer(@RequestPayload SaveCustomerRequest request) {
         SaveCustomerResponse saveCustomerResponse = new SaveCustomerResponse();
-
         Customer customer = customerTypeConverter.convert(request.getCustomer());
-        customerRepository.save(customer);
 
+        if (customerExists(customer)) {
+            saveCustomerResponse.setResponseCode("NOT OK");
+            saveCustomerResponse.setDescription(String.format("Customer with identity code (%s) already exists!", customer.getIdentityCode()));
+            return saveCustomerResponse;
+        }
+
+        customerRepository.save(customer);
         saveCustomerResponse.setResponseCode("OK");
         saveCustomerResponse.setDescription("Successfully saved customer!");
 
         return saveCustomerResponse;
+    }
+
+    private boolean customerExists(Customer customer) {
+        if (customer != null && customer.getIdentityCode() != null) {
+            Customer existingCustomer = customerRepository.findByIdentityCode(customer.getIdentityCode());
+            return (customer.getId() == null || !customerRepository.exists(customer.getId()))
+                    && existingCustomer != null;
+        }
+
+        return false;
     }
 
     @PayloadRoot(namespace = NAMESPACE, localPart = DELETE_CUSTOMER_REQUEST)
@@ -75,10 +93,15 @@ public class CustomerServiceImpl implements CustomerService {
         DeleteCustomerResponse deleteCustomerResponse = new DeleteCustomerResponse();
         Long id = request.getId();
 
-        customerRepository.delete(id);
+        if (customerRepository.exists(id)) {
+            customerRepository.delete(id);
 
-        deleteCustomerResponse.setResponseCode("OK");
-        deleteCustomerResponse.setDescription("Successfully deleted customer!");
+            deleteCustomerResponse.setResponseCode("OK");
+            deleteCustomerResponse.setDescription("Successfully deleted customer!");
+        } else {
+            deleteCustomerResponse.setResponseCode("NOT OK");
+            deleteCustomerResponse.setDescription("Customer does not exist!");
+        }
 
         return deleteCustomerResponse;
     }

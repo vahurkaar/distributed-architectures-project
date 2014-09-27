@@ -64,7 +64,7 @@ public class CustomerRepositoryTest extends RepositoryTestSupport {
 
         customerRepository.save(customer);
 
-        Customer savedCustomer = customerRepository.findByNameLikeOrIdentityCode(null, "111").get(0);
+        Customer savedCustomer = customerRepository.findByIdentityCode("111");
 
         Assert.assertNotNull(savedCustomer);
         Assert.assertEquals(2, savedCustomer.getAddresses().size());
@@ -88,7 +88,7 @@ public class CustomerRepositoryTest extends RepositoryTestSupport {
 
     @Test
     public void testFindByNameAndIdentityCode() throws Exception {
-        List<Customer> customers = customerRepository.findByNameLikeOrIdentityCode("VaH", "123");
+        List<Customer> customers = customerRepository.findByNameLike("VaH");
         Customer customer = customers.get(0);
         Assert.assertEquals("Vahur", customer.getFirstname());
         Assert.assertEquals("123", customer.getIdentityCode());

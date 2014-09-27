@@ -2,7 +2,7 @@ package ee.ttu.converter;
 
 import ee.ttu.model.CustomerAddress;
 import ee.ttu.model.classifier.Country;
-import ee.ttu.repository.classifier.CountryRepository;
+import ee.ttu.service.ClassifierService;
 import ee.ttu.xml.AddressType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class AddressTypeConverter implements Converter<AddressType, CustomerAddress> {
 
     @Autowired
-    private CountryRepository countryRepository;
+    private ClassifierService classifierService;
 
     @Override
     public CustomerAddress convert(AddressType source) {
@@ -37,8 +37,8 @@ public class AddressTypeConverter implements Converter<AddressType, CustomerAddr
         customerAddress.setEmail(source.getEmail());
         customerAddress.setNote(source.getNote());
 
-        if (source.getId() != null) {
-            Country country = countryRepository.findOne(source.getId());
+        if (source.getCountry() != null) {
+            Country country = classifierService.getCountry(source.getCountry());
             customerAddress.setCountry(country);
         }
 

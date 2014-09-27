@@ -44,7 +44,7 @@ public class Customer extends PersistentObject {
     @JoinColumn(name = "cst_type")
     private CustomerType customerType;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "customer")
     private List<CustomerAddress> addresses;
 

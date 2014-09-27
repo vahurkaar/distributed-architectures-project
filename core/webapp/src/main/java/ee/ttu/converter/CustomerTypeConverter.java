@@ -3,8 +3,7 @@ package ee.ttu.converter;
 import ee.ttu.model.Customer;
 import ee.ttu.model.CustomerAddress;
 import ee.ttu.model.classifier.CustomerStateType;
-import ee.ttu.repository.classifier.CustomerStateTypeRepository;
-import ee.ttu.repository.classifier.CustomerTypeRepository;
+import ee.ttu.service.ClassifierService;
 import ee.ttu.util.XMLCalendarUtil;
 import ee.ttu.xml.AddressType;
 import ee.ttu.xml.CustomerType;
@@ -25,10 +24,7 @@ public class CustomerTypeConverter implements Converter<CustomerType, Customer> 
     private AddressTypeConverter addressTypeConverter;
 
     @Autowired
-    private CustomerTypeRepository customerTypeRepository;
-
-    @Autowired
-    private CustomerStateTypeRepository customerStateTypeRepository;
+    private ClassifierService classifierService;
 
     @Override
     public Customer convert(CustomerType source) {
@@ -45,12 +41,12 @@ public class CustomerTypeConverter implements Converter<CustomerType, Customer> 
         customer.setBirthDate(XMLCalendarUtil.xmlCalendarToDate(source.getBirthDate()));
 
         if (source.getCustomerType() != null) {
-            ee.ttu.model.classifier.CustomerType customerType = customerTypeRepository.findOne(source.getCustomerType());
+            ee.ttu.model.classifier.CustomerType customerType = classifierService.getCustomerType(source.getCustomerType());
             customer.setCustomerType(customerType);
         }
 
         if (source.getCustomerStatusType() != null) {
-            CustomerStateType customerStateType = customerStateTypeRepository.findOne(source.getCustomerStatusType());
+            CustomerStateType customerStateType = classifierService.getCustomerStateType(source.getCustomerStatusType());
             customer.setCustomerStateType(customerStateType);
         }
 

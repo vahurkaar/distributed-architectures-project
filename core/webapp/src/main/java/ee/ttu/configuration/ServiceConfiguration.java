@@ -16,6 +16,7 @@ import org.springframework.xml.xsd.XsdSchema;
  */
 @Configuration
 @ComponentScan(basePackages = {
+        "ee.ttu.endpoints",
         "ee.ttu.service",
         "ee.ttu.converter"
 })

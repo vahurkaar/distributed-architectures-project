@@ -1,4 +1,4 @@
-package ee.ttu.service;
+package ee.ttu.endpoints;
 
 import ee.ttu.xml.*;
 
