@@ -1,9 +1,10 @@
 package ee.ttu.endpoints;
 
-import ee.ttu.converter.CustomerConverter;
-import ee.ttu.converter.CustomerTypeConverter;
+import ee.ttu.converter.*;
 import ee.ttu.model.Customer;
+import ee.ttu.model.classifier.*;
 import ee.ttu.repository.CustomerRepository;
+import ee.ttu.service.ClassifierService;
 import ee.ttu.xml.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * Created by Vahur Kaar on 24.09.2014.
  */
-@Endpoint
+@Endpoint(value = "customerServiceEndpoint")
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
@@ -105,5 +106,4 @@ public class CustomerServiceImpl implements CustomerService {
 
         return deleteCustomerResponse;
     }
-
 }

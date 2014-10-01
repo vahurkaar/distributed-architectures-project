@@ -2,7 +2,52 @@
            xmlns:h="http://www.ttu.ee/hajusarhitektuurid"
            elementFormDefault="qualified"
            targetNamespace="http://www.ttu.ee/hajusarhitektuurid">
-    
+
+    <xs:element name="GetCustomerTypesRequest">
+        <xs:complexType>
+            <xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCustomerTypesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customerType" type="h:CustomerTypeType" maxOccurs="unbounded" minOccurs="0" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCustomerStateTypesRequest">
+        <xs:complexType>
+            <xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCustomerStateTypesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customerStateType" type="h:CustomerStateTypeType" maxOccurs="unbounded" minOccurs="0" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCountriesRequest">
+        <xs:complexType>
+            <xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCountriesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="country" type="h:CountryType" maxOccurs="unbounded" minOccurs="0" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="GetCustomersRequest">
         <xs:complexType>
             <xs:choice>
@@ -55,14 +100,36 @@
         </xs:complexType>
     </xs:element>
 
+
+    <xs:complexType name="CustomerTypeType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" />
+            <xs:element name="name" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CustomerStateTypeType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" />
+            <xs:element name="name" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CountryType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" />
+            <xs:element name="name" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="CustomerType">
         <xs:sequence>
             <xs:element name="id" type="xs:long" minOccurs="0" />
-            <xs:element name="firstname" type="xs:string" minOccurs="0" />
-            <xs:element name="lastname" type="xs:string" minOccurs="0" />
+            <xs:element name="firstname" type="xs:string" />
+            <xs:element name="lastname" type="xs:string" />
             <xs:element name="identityCode" type="xs:string" />
             <xs:element name="note" type="xs:string" minOccurs="0" />
-            <xs:element name="birthDate" type="h:dateISO" minOccurs="0" />
+            <xs:element name="birthDate" type="h:dateISO" />
             <xs:element name="customerStatusType" type="xs:long" minOccurs="0" />
             <xs:element name="customerType" type="xs:long" minOccurs="0" />
             <xs:element name="addresses" minOccurs="0" >

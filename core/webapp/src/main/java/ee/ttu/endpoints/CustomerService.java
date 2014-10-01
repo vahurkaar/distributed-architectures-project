@@ -1,6 +1,9 @@
 package ee.ttu.endpoints;
 
 import ee.ttu.xml.*;
+import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 /**
  * Created by Vahur Kaar on 24.09.2014.

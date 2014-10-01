@@ -12,22 +12,30 @@ import java.util.Date;
 public class XMLCalendarUtil {
 
     public static Date xmlCalendarToDate(XMLGregorianCalendar calendar) {
-        return calendar.toGregorianCalendar().getTime();
+        if (calendar != null) {
+            return calendar.toGregorianCalendar().getTime();
+        }
+
+        return null;
     }
 
     public static XMLGregorianCalendar dateToXmlCalendar(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
+        if (date != null) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
 
-        try {
-            XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar();
-            xmlGregorianCalendar.setDay(calendar.get(Calendar.DAY_OF_MONTH));
-            xmlGregorianCalendar.setMonth(calendar.get(Calendar.MONTH) + 1);
-            xmlGregorianCalendar.setYear(calendar.get(Calendar.YEAR));
-            return xmlGregorianCalendar;
-        } catch (DatatypeConfigurationException e) {
-            return null;
+            try {
+                XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar();
+                xmlGregorianCalendar.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+                xmlGregorianCalendar.setMonth(calendar.get(Calendar.MONTH) + 1);
+                xmlGregorianCalendar.setYear(calendar.get(Calendar.YEAR));
+                return xmlGregorianCalendar;
+            } catch (DatatypeConfigurationException e) {
+                return null;
+            }
         }
+
+        return null;
     }
 
 }
