@@ -14,6 +14,10 @@
         <module>soap-client</module>
     </modules>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <!-- See http://platform.spring.io/platform for more info -->
     <dependencyManagement>
         <dependencies>
