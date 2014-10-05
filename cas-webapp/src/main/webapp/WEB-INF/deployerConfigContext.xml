@@ -92,25 +92,15 @@
           class="org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler"
           p:httpClient-ref="httpClient" />
 
-    <!--
-       | TODO: Replace this component with one suitable for your enviroment.
-       |
-       | This component provides authentication for the kind of credential used in your environment. In most cases
-       | credential is a username/password pair that lives in a system of record like an LDAP directory.
-       | The most common authentication handler beans:
-       |
-       | * org.jasig.cas.authentication.LdapAuthenticationHandler
-       | * org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler
-       | * org.jasig.cas.adaptors.x509.authentication.handler.support.X509CredentialsAuthenticationHandler
-       | * org.jasig.cas.support.spnego.authentication.handler.support.JCIFSSpnegoAuthenticationHandler
-       -->
+    <bean id="passwordEncoder"
+          class="org.jasig.cas.authentication.handler.DefaultPasswordEncoder"
+          c:encodingAlgorithm="SHA1"
+          p:characterEncoding="UTF-8" />
+
     <bean id="primaryAuthenticationHandler"
-          class="org.jasig.cas.authentication.AcceptUsersAuthenticationHandler">
-        <property name="users">
-            <map>
-                <entry key="casuser" value="Mellon"/>
-            </map>
-        </property>
+          class="ee.ttu.CustomUsersAuthenticationHandler">
+        <property name="coreWebServiceClient" ref="coreWebServiceClient" />
+        <property name="passwordEncoder" ref="passwordEncoder" />
     </bean>
 
     <!-- Required for proxy ticket mechanism -->
@@ -138,6 +128,7 @@
         <entry key="eduPersonAffiliation" value="eduPersonAffiliation" /> 
         <entry key="groupMembership" value="groupMembership" />
     </util:map>
+
 
     <!-- 
     Sample, in-memory data store for the ServiceRegistry. A real implementation

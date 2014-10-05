@@ -1,4 +1,3 @@
-
 <%@ page import="ee.ttu.Customer" %>
 <!DOCTYPE html>
 <html>
@@ -41,9 +40,6 @@
             <div id="customerList"></div>
             <div id="customerForm"></div>
 
-			<div class="pagination">
-				<g:paginate total="${customerInstanceCount ?: 0}" />
-			</div>
 		</div>
 	</body>
 </html>
