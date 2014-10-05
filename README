@@ -4,3 +4,7 @@
 	3. contracts submodule webapp
 	4. central authentication service
 	5. intragration server
+
+
+keytool.exe -genkey -alias localhost -keyalg RSA
+execute InstallCert

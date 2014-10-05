@@ -135,6 +135,8 @@ grails.plugin.springsecurity.cas.serviceParameter = 'service'
 grails.plugin.springsecurity.cas.filterProcessesUrl = '/j_spring_cas_security_check'
 grails.plugin.springsecurity.cas.useSingleSignout = true
 
+grails.plugin.springsecurity.logout.afterLogoutUrl = "https://localhost:8443/cas/logout?url=https://localhost:8444/customers/j_spring_cas_security_check"
+
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'ee.ttu.User'
 
