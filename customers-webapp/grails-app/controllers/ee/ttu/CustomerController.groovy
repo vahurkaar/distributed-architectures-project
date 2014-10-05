@@ -1,10 +1,12 @@
 package ee.ttu
 
 import org.apache.commons.lang.StringUtils
+import org.springframework.security.access.annotation.Secured
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+@Secured('IS_AUTHENTICATED_FULLY')
 class CustomerController {
 
     CustomerService customerService

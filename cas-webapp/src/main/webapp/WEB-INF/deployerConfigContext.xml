@@ -153,6 +153,7 @@
             <property name="name" value="Customers" />
             <property name="description" value="Customers webapp (/customers)" />
             <property name="serviceId" value="${cas.service.customers}" />
+            <property name="allowedToProxy" value="true" />
         </bean>
     </util:list>
     

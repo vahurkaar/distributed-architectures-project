@@ -1,5 +1,9 @@
+import ee.ttu.CustomerUserDetailsService
+
 // Place your Spring DSL code here
 beans = {
+
+    userDetailsService(CustomerUserDetailsService)
 
     httpClient(wslite.http.HTTPClient) {
         connectTimeout = 5000

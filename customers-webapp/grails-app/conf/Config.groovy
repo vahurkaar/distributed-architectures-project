@@ -99,11 +99,16 @@ environments {
 log4j.main = {
     // Example of changing the log pattern for the default console appender:
     //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    appenders {
+        console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+        file name:'file', file:'C:/Users/Vahur Kaar/Development/projects/temp/customers.log'
+    }
 
-    error  'org.codehaus.groovy.grails.web.servlet',        // controllers
+    root {
+        debug 'file'
+    }
+
+    debug  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
            'org.codehaus.groovy.grails.web.sitemesh',       // layouts
            'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
@@ -115,3 +120,34 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+grails.plugin.springsecurity.cas.active = true
+grails.plugin.springsecurity.cas.loginUri = '/login'
+grails.plugin.springsecurity.cas.serviceUrl = 'https://localhost:8444/customers/j_spring_cas_security_check'
+grails.plugin.springsecurity.cas.serverUrlPrefix = 'https://localhost:8443/cas'
+grails.plugin.springsecurity.cas.proxyCallbackUrl = 'https://localhost:8444/customers/secure/receptor'
+grails.plugin.springsecurity.cas.proxyReceptorUrl = '/secure/receptor'
+grails.plugin.springsecurity.cas.serverUrlEncoding = 'UTF-8'
+grails.plugin.springsecurity.cas.sendRenew = false
+grails.plugin.springsecurity.cas.key = 'grails-spring-security-cas'
+grails.plugin.springsecurity.cas.artifactParameter = 'ticket'
+grails.plugin.springsecurity.cas.serviceParameter = 'service'
+grails.plugin.springsecurity.cas.filterProcessesUrl = '/j_spring_cas_security_check'
+grails.plugin.springsecurity.cas.useSingleSignout = true
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'ee.ttu.User'
+
+grails.plugin.springsecurity.rejectIfNoRule = true
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+        '/':                              ['permitAll'],
+        '/index':                         ['permitAll'],
+        '/index.gsp':                     ['permitAll'],
+        '/assets/**':                     ['permitAll'],
+        '/**/js/**':                      ['permitAll'],
+        '/**/css/**':                     ['permitAll'],
+        '/**/images/**':                  ['permitAll'],
+        '/**/favicon.ico':                ['permitAll'],
+        '/secure/receptor':               ['permitAll']
+]
+
