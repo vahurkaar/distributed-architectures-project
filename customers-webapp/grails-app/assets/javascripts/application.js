@@ -25,3 +25,7 @@ $(document).ready(function () {
             $("#spinner").hide();
         });
 });
+
+function performSearch() {
+    $("#customerSearchButton").click();
+}

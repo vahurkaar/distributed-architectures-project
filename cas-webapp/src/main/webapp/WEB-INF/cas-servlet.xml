@@ -254,7 +254,7 @@
 
   <bean id="messageInterpolator" class="org.jasig.cas.util.SpringAwareMessageMessageInterpolator"/>
 
-  <bean id="credentialsValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"
+  <bean id="credentialValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"
         p:messageInterpolator-ref="messageInterpolator"/>
 
   <bean id="ticketGrantingTicketCheckAction" class="org.jasig.cas.web.flow.TicketGrantingTicketCheckAction"

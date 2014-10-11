@@ -1,18 +1,27 @@
 package ee.ttu
 
+import grails.plugin.springsecurity.SpringSecurityService
 import org.apache.commons.lang.StringUtils
+import org.codehaus.groovy.grails.web.binding.GrailsWebDataBinder
 import org.springframework.security.access.annotation.Secured
+import org.springframework.web.bind.WebDataBinder
+import org.springframework.web.bind.annotation.InitBinder
 
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
 
 @Secured('IS_AUTHENTICATED_FULLY')
 class CustomerController {
 
     CustomerService customerService
     ClassifierService classifierService
+    SpringSecurityService springSecurityService
+    CustomerValidationService customerValidationService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+
+    def afterInterceptor = { model ->
+        model.user = springSecurityService.principal
+    }
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -50,9 +59,13 @@ class CustomerController {
 
     def save() {
         Customer customer = new Customer(params)
-
+        customerValidationService.validateCustomer(customer)
         if (customer.hasErrors()) {
-            respond customer.errors, view:'create'
+            render view:'create', model: [
+                    customer: customer,
+                    customerTypes: classifierService.getAllCustomerTypes(),
+                    customerStatusTypes: classifierService.getAllCustomerStatusTypes()
+            ]
             return
         }
 
@@ -69,9 +82,14 @@ class CustomerController {
 
     def update() {
         Customer customer = new Customer(params)
-
+        customerValidationService.validateCustomer(customer, true)
+        log.error(customer.hasErrors())
         if (customer.hasErrors()) {
-            respond customer.errors, view:'edit'
+            render view:'edit', model: [
+                    customer: customer,
+                    customerTypes: classifierService.getAllCustomerTypes(),
+                    customerStatusTypes: classifierService.getAllCustomerStatusTypes()
+            ]
             return
         }
 
@@ -89,14 +107,14 @@ class CustomerController {
     def delete() {
         Long customerId = Long.parseLong(params.customerId)
 
-        customerService.deleteCustomer(customerId)
+//        customerService.deleteCustomer(customerId)
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Customer.label', default: 'Customer'), params.identityCode])
-                redirect action:"index", method:"GET"
+                render view: 'delete'
             }
-            '*'{ render status: NO_CONTENT }
+            '*'{ respond customerId, status: OK }
         }
     }
 

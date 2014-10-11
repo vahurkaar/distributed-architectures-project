@@ -60,7 +60,7 @@
     <xs:element name="GetUserResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="user" type="h:UserType" />
+                <xs:element name="user" type="h:UserType" minOccurs="0" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -8,6 +8,6 @@ class UrlMappings {
         }
 
         "/"(controller: "customer")
-        "500"(view:'/error')
+        "500"(controller: 'error')
 	}
 }

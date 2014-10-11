@@ -1,6 +1,7 @@
 package ee.ttu.endpoints;
 
 import ee.ttu.converter.*;
+import ee.ttu.exception.CoreException;
 import ee.ttu.model.Customer;
 import ee.ttu.model.classifier.*;
 import ee.ttu.repository.CustomerRepository;
@@ -65,9 +66,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerTypeConverter.convert(request.getCustomer());
 
         if (customerExists(customer)) {
-            saveCustomerResponse.setResponseCode("NOT OK");
-            saveCustomerResponse.setDescription(String.format("Customer with identity code (%s) already exists!", customer.getIdentityCode()));
-            return saveCustomerResponse;
+            throw new CoreException(String.format("Customer with identity code (%s) already exists!", customer.getIdentityCode()));
         }
 
         customerRepository.save(customer);
@@ -94,15 +93,14 @@ public class CustomerServiceImpl implements CustomerService {
         DeleteCustomerResponse deleteCustomerResponse = new DeleteCustomerResponse();
         Long id = request.getId();
 
-        if (customerRepository.exists(id)) {
-            customerRepository.delete(id);
-
-            deleteCustomerResponse.setResponseCode("OK");
-            deleteCustomerResponse.setDescription("Successfully deleted customer!");
-        } else {
-            deleteCustomerResponse.setResponseCode("NOT OK");
-            deleteCustomerResponse.setDescription("Customer does not exist!");
+        if (!customerRepository.exists(id)) {
+            throw new CoreException("Customer does not exist!");
         }
+
+        customerRepository.delete(id);
+
+        deleteCustomerResponse.setResponseCode("OK");
+        deleteCustomerResponse.setDescription("Successfully deleted customer!");
 
         return deleteCustomerResponse;
     }

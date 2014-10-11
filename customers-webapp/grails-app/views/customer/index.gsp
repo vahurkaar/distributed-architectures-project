@@ -17,6 +17,9 @@
                         <a href="javascript:document.logoutForm.submit()">Logout</a>
                     </form>
                 </li>
+                <li style="float: right">
+                    <span><a>Welcome, ${user.username}</a></span>
+                </li>
 			</ul>
 		</div>
 		<div id="list-customer" class="content scaffold-list" role="main">
@@ -33,7 +36,7 @@
                     <label for="query-identityCode"><g:message code="default.list.query-identityCode" default="Identity code"/></label>
                     <g:textField name="query-identityCode" value="${params.queryIdentityCode}"/>
 
-                    <g:submitButton name="${message(code: 'default.button.search.label', default: 'Search')}" />
+                    <g:submitButton name="${message(code: 'default.button.search.label', default: 'Search')}" id="customerSearchButton" />
                 </div>
             </g:formRemote>
 

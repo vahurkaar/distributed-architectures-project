@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 
 class CustomerUserDetailsService extends GormUserDetailsService {
 
+    def soapClient
+
     @Override
     UserDetails loadUserByUsername(String username, boolean loadRoles) throws UsernameNotFoundException, DataAccessException {
         User user = findUserByUsername(username)
@@ -23,9 +25,22 @@ class CustomerUserDetailsService extends GormUserDetailsService {
         createUserDetails user, authorities
     }
 
-    private User findUserByUsername(String username) {
-        // TODO Load user from SOAP service
-        return new User(username: 'casuser', password: 'Mellon');
+    private User findUserByUsername(String uname) {
+        def response = soapClient.send {
+            body {
+                GetUserRequest('xmlns':'http://www.ttu.ee/hajusarhitektuurid') {
+                    username(uname)
+                }
+            }
+        }
+
+        def user = response.GetUserResponse.user
+
+        return new User(
+                userId: user.id.text(),
+                username: user.username.text(),
+                password: user.password.text()
+        )
     }
 
     @Override

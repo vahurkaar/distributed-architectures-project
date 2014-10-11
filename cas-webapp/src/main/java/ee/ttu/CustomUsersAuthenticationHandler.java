@@ -1,15 +1,16 @@
 package ee.ttu;
 
+import ee.ttu.exception.LoginServerException;
 import ee.ttu.xml.GetUserResponse;
 import org.jasig.cas.authentication.HandlerResult;
 import org.jasig.cas.authentication.PreventedException;
 import org.jasig.cas.authentication.UsernamePasswordCredential;
 import org.jasig.cas.authentication.handler.support.AbstractUsernamePasswordAuthenticationHandler;
 import org.jasig.cas.authentication.principal.SimplePrincipal;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.security.auth.login.AccountNotFoundException;
 import javax.security.auth.login.FailedLoginException;
+import javax.security.auth.login.LoginException;
 import java.security.GeneralSecurityException;
 
 /**
@@ -41,18 +42,24 @@ public class CustomUsersAuthenticationHandler extends AbstractUsernamePasswordAu
         return createHandlerResult(credential, new SimplePrincipal(username), null);
     }
 
-    private String getUserPassword(String username) throws AccountNotFoundException {
+    private String getUserPassword(String username) throws LoginException {
         if (username == null) {
             logger.debug("Username was null.");
             throw new AccountNotFoundException("Username was null!");
         }
 
-        GetUserResponse response = coreWebServiceClient.getUserByUsername(username);
-        if (response != null && response.getUser() != null) {
-            return response.getUser().getPassword();
+        GetUserResponse response = null;
+        try {
+            response = coreWebServiceClient.getUserByUsername(username);
+        } catch (Exception e) {
+            throw new LoginServerException();
         }
 
-        return null;
+        if (response.getUser() == null) {
+            throw new AccountNotFoundException();
+        }
+
+        return response.getUser().getPassword();
     }
 
     public void setCoreWebServiceClient(CoreWebServiceClient coreWebServiceClient) {

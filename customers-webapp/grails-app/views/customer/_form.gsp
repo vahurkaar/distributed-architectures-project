@@ -1,4 +1,13 @@
 <%@ page import="ee.ttu.Customer" %>
+
+<g:hasErrors bean="${customer}">
+    <ul class="errors" role="alert">
+        <g:eachError bean="${customer}" var="error">
+            <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
+        </g:eachError>
+    </ul>
+</g:hasErrors>
+
 <g:hiddenField name="customerId" value="${customer?.customerId}" />
 
 <div class="fieldcontain ${hasErrors(bean: customer, field: 'identityCode', 'error')} required">
@@ -6,7 +15,7 @@
         <g:message code="customer.identityCode.label" default="Identity Code" />
         <span class="required-indicator">*</span>
     </label>
-    <g:textField readonly="${customer?.identityCode}" name="identityCode" required="" value="${customer?.identityCode}"/>
+    <g:textField readonly="${customer?.identityCode != null && !formType.equals('create')}" name="identityCode" required="" value="${customer?.identityCode}"/>
 
 </div>
 
@@ -33,7 +42,7 @@
 		<g:message code="customer.birthDate.label" default="Birth Date" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker default="none" noSelection="['':'']" name="birthDate" precision="day"  value="${customer?.birthDate}"  />
+	<g:datePicker name="birthDate" precision="day" years="${1900..2100}" value="${customer?.birthDate}"  />
 
 </div>
 

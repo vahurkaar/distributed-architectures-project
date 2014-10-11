@@ -47,7 +47,7 @@ class CustomerService {
         def response = soapClient.send {
             body {
                 GetCustomersRequest('xmlns':'http://www.ttu.ee/hajusarhitektuurid') {
-                    name(customerName)
+                    name(customerName?.trim())
                 }
             }
         }
@@ -63,7 +63,7 @@ class CustomerService {
         def response = soapClient.send {
             body {
                 GetCustomersRequest('xmlns':'http://www.ttu.ee/hajusarhitektuurid') {
-                    identityCode(customerIdentityCode)
+                    identityCode(customerIdentityCode?.trim())
                 }
             }
         }
@@ -84,6 +84,10 @@ class CustomerService {
     }
 
     private def parseCustomer(customerNode) {
+        if (StringUtils.isEmpty(customerNode.identityCode?.text())) {
+            return null
+        }
+
         def customer = new Customer(
                 customerId: customerNode.id?.text(),
                 identityCode: customerNode.identityCode?.text(),

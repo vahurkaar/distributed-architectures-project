@@ -32,7 +32,10 @@ public class UserServiceImpl implements UserService {
 
         if (StringUtils.isNotEmpty(request.getUsername())) {
             EmployeeUser employeeUser = employeeUserRepository.findByUsername(request.getUsername());
-            response.setUser(employeeUserConverter.convert(employeeUser));
+
+            if (employeeUser != null) {
+                response.setUser(employeeUserConverter.convert(employeeUser));
+            }
         }
 
         return response;
