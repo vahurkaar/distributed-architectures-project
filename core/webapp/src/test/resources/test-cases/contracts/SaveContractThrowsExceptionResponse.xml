@@ -1,0 +1,6 @@
+<SOAP-ENV:Fault xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <faultcode>SOAP-ENV:Server</faultcode>
+    <faultstring xml:lang="en">
+        Failed to find ContractType with id '12'
+    </faultstring>
+</SOAP-ENV:Fault>

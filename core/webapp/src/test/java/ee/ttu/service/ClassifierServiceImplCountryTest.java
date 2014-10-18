@@ -101,7 +101,7 @@ public class ClassifierServiceImplCountryTest {
 
     @Test
     public void testGetAllCountriesFindsNoResults() throws Exception {
-        when(countryRepository.findAll()).thenReturn(new ArrayList<>());
+        when(countryRepository.findAll()).thenReturn(new ArrayList<Country>());
 
         List<Country> countries = classifierService.getAllCountries();
         Assert.assertNotNull(countries);

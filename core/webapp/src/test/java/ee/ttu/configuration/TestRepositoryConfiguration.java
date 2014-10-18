@@ -1,5 +1,6 @@
 package ee.ttu.configuration;
 
+import ee.ttu.repository.ContractRepository;
 import ee.ttu.repository.CustomerRepository;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,11 @@ public class TestRepositoryConfiguration {
     @Bean
     public CustomerRepository customerRepository() {
         return Mockito.mock(CustomerRepository.class);
+    }
+
+    @Bean
+    public ContractRepository contractRepository() {
+        return Mockito.mock(ContractRepository.class);
     }
 
 }

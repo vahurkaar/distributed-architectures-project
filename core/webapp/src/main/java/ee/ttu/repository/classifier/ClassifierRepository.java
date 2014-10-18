@@ -10,7 +10,7 @@ import java.util.List;
  * Created by Vahur Kaar on 20.09.2014.
  */
 @NoRepositoryBean
-public interface ClassifierRepository<T, ID extends Serializable> extends Repository<T, ID> {
+public interface ClassifierRepository<T> extends Repository<T, Long> {
 
     /**
      * Retrieves an entity by its id.
@@ -19,7 +19,7 @@ public interface ClassifierRepository<T, ID extends Serializable> extends Reposi
      * @return the entity with the given id or {@literal null} if none found
      * @throws IllegalArgumentException if {@code id} is {@literal null}
      */
-    T findOne(ID id);
+    T findOne(Long id);
 
     /**
      * Returns all instances of the type.

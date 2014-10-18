@@ -35,7 +35,7 @@ public class CustomerServiceImplTest extends RepositoryTestSupport {
     @Before
     public void setUp() throws Exception {
         client = MockWebServiceClient.createClient(applicationContext);
-        executeSqlScript("services_test.sql", false);
+        executeSqlScript("sql/customers/services_test.sql", false);
     }
 
     @Test
@@ -85,8 +85,8 @@ public class CustomerServiceImplTest extends RepositoryTestSupport {
 
 
     private void executeServiceTest(String testCase) throws IOException {
-        Source request = new ResourceSource(new ClassPathResource("test-cases/" + testCase + "Request.xml"));
-        Source response = new ResourceSource(new ClassPathResource("test-cases/" + testCase + "Response.xml"));
+        Source request = new ResourceSource(new ClassPathResource("test-cases/customers/" + testCase + "Request.xml"));
+        Source response = new ResourceSource(new ClassPathResource("test-cases/customers/" + testCase + "Response.xml"));
 
         client.sendRequest(withPayload(request))
                 .andExpect(payload(response));

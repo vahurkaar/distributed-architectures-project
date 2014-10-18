@@ -10,6 +10,14 @@
 		<div class="nav" role="navigation">
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
+                <li style="float: right">
+                    <form name="logoutForm" method="POST" action="${createLink(controller: 'logout')}">
+                        <a href="javascript:document.logoutForm.submit()">Logout</a>
+                    </form>
+                </li>
+                <li style="float: right">
+                    <span><a>Welcome, ${user.username}</a></span>
+                </li>
 			</ul>
 		</div>
 		<div id="create-customer" class="content scaffold-create" role="main">

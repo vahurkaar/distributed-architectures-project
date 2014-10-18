@@ -49,23 +49,23 @@ public class ServiceConfiguration {
     }
 
     @Bean
-    public DefaultWsdl11Definition customers() {
+    public DefaultWsdl11Definition core() {
         DefaultWsdl11Definition defaultWsdl11Definition = new DefaultWsdl11Definition();
-        defaultWsdl11Definition.setLocationUri("/customerService/");
-        defaultWsdl11Definition.setPortTypeName("CustomerResource");
+        defaultWsdl11Definition.setLocationUri("/coreService/");
+        defaultWsdl11Definition.setPortTypeName("CoreResource");
         defaultWsdl11Definition.setRequestSuffix("Request");
         defaultWsdl11Definition.setResponseSuffix("Response");
-        defaultWsdl11Definition.setServiceName("CustomerService");
+        defaultWsdl11Definition.setServiceName("CoreService");
         defaultWsdl11Definition.setTargetNamespace("http://www.ttu.ee/hajusarhitektuurid");
-        defaultWsdl11Definition.setSchema(customerSchema());
+        defaultWsdl11Definition.setSchema(coreSchema());
 
         return defaultWsdl11Definition;
     }
 
     @Bean
-    public XsdSchema customerSchema() {
+    public XsdSchema coreSchema() {
         SimpleXsdSchema xsdSchema = new SimpleXsdSchema();
-        xsdSchema.setXsd(new ClassPathResource("customer.xsd"));
+        xsdSchema.setXsd(new ClassPathResource("core.xsd"));
         return xsdSchema;
     }
 

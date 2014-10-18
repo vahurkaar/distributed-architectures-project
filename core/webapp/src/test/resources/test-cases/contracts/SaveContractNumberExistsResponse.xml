@@ -1,0 +1,6 @@
+<SOAP-ENV:Fault xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <faultcode>SOAP-ENV:Server</faultcode>
+    <faultstring xml:lang="en">
+        Contract with the number '222' already exists!
+    </faultstring>
+</SOAP-ENV:Fault>

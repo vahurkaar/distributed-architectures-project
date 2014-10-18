@@ -101,7 +101,8 @@ log4j.main = {
     //
     appenders {
         console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-        file name:'file', file:'C:/Users/Vahur Kaar/Development/projects/temp/customers.log'
+        rollingFile name:'file', file:'C:/Development/projects/temp/customers.log', maxFileSize:'50MB', maxBackupIndex:2
+        rollingFile name:'stacktrace', file:'stacktrace.log', maxFileSize:'5MB', maxBackupIndex:2
     }
 
     root {
@@ -123,19 +124,19 @@ log4j.main = {
 
 grails.plugin.springsecurity.cas.active = true
 grails.plugin.springsecurity.cas.loginUri = '/login'
-grails.plugin.springsecurity.cas.serviceUrl = 'https://localhost:8444/customers/j_spring_cas_security_check'
-grails.plugin.springsecurity.cas.serverUrlPrefix = 'https://localhost:8443/cas'
-grails.plugin.springsecurity.cas.proxyCallbackUrl = 'https://localhost:8444/customers/secure/receptor'
+grails.plugin.springsecurity.cas.serviceUrl = 'http://localhost:8444/customers/j_spring_cas_security_check'
+grails.plugin.springsecurity.cas.serverUrlPrefix = 'http://localhost:8443/cas'
+grails.plugin.springsecurity.cas.proxyCallbackUrl = 'http://localhost:8444/customers/secure/receptor'
 grails.plugin.springsecurity.cas.proxyReceptorUrl = '/secure/receptor'
 grails.plugin.springsecurity.cas.serverUrlEncoding = 'UTF-8'
-grails.plugin.springsecurity.cas.sendRenew = false
+grails.plugin.springsecurity.cas.sendRenew = true
 grails.plugin.springsecurity.cas.key = 'grails-spring-security-cas'
 grails.plugin.springsecurity.cas.artifactParameter = 'ticket'
 grails.plugin.springsecurity.cas.serviceParameter = 'service'
 grails.plugin.springsecurity.cas.filterProcessesUrl = '/j_spring_cas_security_check'
 grails.plugin.springsecurity.cas.useSingleSignout = true
 
-grails.plugin.springsecurity.logout.afterLogoutUrl = "https://localhost:8443/cas/logout?url=https://localhost:8444/customers/j_spring_cas_security_check"
+grails.plugin.springsecurity.logout.afterLogoutUrl = "http://localhost:8443/cas/logout?service=http%3A%2F%2Flocalhost%3A8444%2Fcustomers"
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'ee.ttu.User'

@@ -48,6 +48,10 @@ public class Customer extends PersistentObject {
     @JoinColumn(name = "customer")
     private List<CustomerAddress> addresses;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "customer")
+    private List<Contract> contracts;
+
     public Long getId() {
         return id;
     }
@@ -121,5 +125,17 @@ public class Customer extends PersistentObject {
 
     public void setAddresses(List<CustomerAddress> addresses) {
         this.addresses = addresses;
+    }
+
+    public List<Contract> getContracts() {
+        if (contracts == null) {
+            contracts = new ArrayList<>();
+        }
+
+        return contracts;
+    }
+
+    public void setContracts(List<Contract> contracts) {
+        this.contracts = contracts;
     }
 }

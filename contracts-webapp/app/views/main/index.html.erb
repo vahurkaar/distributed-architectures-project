@@ -1,0 +1,20 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li>
+            <%= link_to t('default.home.label'), :controller => 'main', :action => 'index' %>
+        </li>
+        <li style="float: right">
+            <%= link_to("Logout", :action => 'logout') %>
+        </li>
+        <li style="float: right">
+            <span><a>Welcome,
+                <%= session[:cas_user]%>
+            </a></span>
+        </li>
+    </ul>
+</div>
+
+<h1>Main#index</h1>
+<p>Find me in app/views/main/index.html.erb</p>
+
+<%= @response %>

@@ -90,6 +90,7 @@
     <!-- Required for proxy ticket mechanism. -->
     <bean id="proxyAuthenticationHandler"
           class="org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler"
+          p:requireSecure="false"
           p:httpClient-ref="httpClient" />
 
     <bean id="passwordEncoder"
@@ -144,6 +145,13 @@
             <property name="name" value="Customers" />
             <property name="description" value="Customers webapp (/customers)" />
             <property name="serviceId" value="${cas.service.customers}" />
+            <property name="allowedToProxy" value="true" />
+        </bean>
+        <bean class="org.jasig.cas.services.RegisteredServiceImpl">
+            <property name="id" value="2" />
+            <property name="name" value="Contracts" />
+            <property name="description" value="Contracts webapp (/contracts)" />
+            <property name="serviceId" value="${cas.service.contracts}" />
             <property name="allowedToProxy" value="true" />
         </bean>
     </util:list>

@@ -1,8 +1,6 @@
 package ee.ttu.service;
 
-import ee.ttu.model.classifier.Country;
-import ee.ttu.model.classifier.CustomerStateType;
-import ee.ttu.model.classifier.CustomerType;
+import ee.ttu.model.classifier.*;
 
 import java.util.List;
 
@@ -29,5 +27,19 @@ public interface ClassifierService {
 
     List<CustomerStateType> getAllCustomerStateTypes();
 
+    List<ContractType> getAllContractTypes();
+
+
+    ContractType getContractType(Long id);
+
     CustomerStateType findCustomerStateTypeByName(String name);
+
+    ContractType findContractTypeByName(String name);
+
+
+    ContractStatusType getContractStatusType(Long id);
+
+    List<ContractStatusType> getAllContractStatusTypes();
+
+    ContractStatusType findContractStatusTypeByName(String name);
 }

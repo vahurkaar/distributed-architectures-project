@@ -18,7 +18,7 @@ beans = {
     }
 
     soapClient(wslite.soap.SOAPClient) {
-        serviceURL = "http://localhost:8088/core/customerService/"
+        serviceURL = "http://localhost:8088/core/coreService/"
         httpClient = ref('httpClient')
         // authorization = ref('clientBasicAuth')
     }

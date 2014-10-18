@@ -1,12 +1,8 @@
 package ee.ttu.service;
 
 import ee.ttu.exception.CoreException;
-import ee.ttu.model.classifier.Country;
-import ee.ttu.model.classifier.CustomerStateType;
-import ee.ttu.model.classifier.CustomerType;
-import ee.ttu.repository.classifier.CountryRepository;
-import ee.ttu.repository.classifier.CustomerStateTypeRepository;
-import ee.ttu.repository.classifier.CustomerTypeRepository;
+import ee.ttu.model.classifier.*;
+import ee.ttu.repository.classifier.*;
 import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +29,11 @@ public class ClassifierServiceImpl implements ClassifierService {
     @Autowired
     private CustomerTypeRepository customerTypeRepository;
 
+    @Autowired
+    private ContractTypeRepository contractTypeRepository;
 
-
+    @Autowired
+    private ContractStatusTypeRepository contractStatusTypeRepository;
 
     @Override
     public CustomerType getCustomerType(Long id) {
@@ -183,6 +182,106 @@ public class ClassifierServiceImpl implements ClassifierService {
             return customerStateType;
         } catch (HibernateException e) {
             throw new CoreException(String.format("Failed to find CustomerStateType with name '%s'", name), e);
+        }
+    }
+
+
+
+    @Override
+    public ContractType getContractType(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ContractType id must not be null!");
+        }
+
+        try {
+            ContractType contractType = contractTypeRepository.findOne(id);
+
+            if (contractType == null) {
+                throw new CoreException(String.format("Failed to find ContractType with id '%s'", id));
+            }
+
+            return contractType;
+        } catch (HibernateException e) {
+            throw new CoreException(String.format("Failed to find ContractType with id '%s'", id), e);
+        }
+    }
+
+    @Override
+    public List<ContractType> getAllContractTypes() {
+        try {
+            return contractTypeRepository.findAll();
+        } catch (HibernateException e) {
+            logger.warn("Failed to find any contract types!", e);
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public ContractType findContractTypeByName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("ContractType name must not be null!");
+        }
+
+        try {
+            ContractType contractType = contractTypeRepository.findByName(name);
+
+            if (contractType == null) {
+                throw new CoreException(String.format("Failed to find ContractType with name '%s'", name));
+            }
+
+            return contractType;
+        } catch (HibernateException e) {
+            throw new CoreException(String.format("Failed to find ContractType with name '%s'", name), e);
+        }
+    }
+
+
+
+    @Override
+    public ContractStatusType getContractStatusType(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ContractStatusType id must not be null!");
+        }
+
+        try {
+            ContractStatusType contractStatusType = contractStatusTypeRepository.findOne(id);
+
+            if (contractStatusType == null) {
+                throw new CoreException(String.format("Failed to find ContractStatusType with id '%s'", id));
+            }
+
+            return contractStatusType;
+        } catch (HibernateException e) {
+            throw new CoreException(String.format("Failed to find ContractStatusType with id '%s'", id), e);
+        }
+    }
+
+    @Override
+    public List<ContractStatusType> getAllContractStatusTypes() {
+        try {
+            return contractStatusTypeRepository.findAll();
+        } catch (HibernateException e) {
+            logger.warn("Failed to find any contract status types!", e);
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public ContractStatusType findContractStatusTypeByName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("ContractStatusType name must not be null!");
+        }
+
+        try {
+            ContractStatusType contractStatusType = contractStatusTypeRepository.findByName(name);
+
+            if (contractStatusType == null) {
+                throw new CoreException(String.format("Failed to find ContractStatusType with name '%s'", name));
+            }
+
+            return contractStatusType;
+        } catch (HibernateException e) {
+            throw new CoreException(String.format("Failed to find ContractStatusType with name '%s'", name), e);
         }
     }
 }

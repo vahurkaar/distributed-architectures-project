@@ -101,7 +101,7 @@ public class ClassifierServiceImplCustomerTypeTest {
 
     @Test
     public void testGetAllCustomerTypesFindsNoResults() throws Exception {
-        when(customerTypeRepository.findAll()).thenReturn(new ArrayList<>());
+        when(customerTypeRepository.findAll()).thenReturn(new ArrayList<CustomerType>());
 
         List<CustomerType> allCustomerTypes = classifierService.getAllCustomerTypes();
         Assert.assertNotNull(allCustomerTypes);

@@ -1,5 +1,6 @@
 package ee.ttu.converter;
 
+import ee.ttu.model.Contract;
 import ee.ttu.model.Customer;
 import ee.ttu.model.CustomerAddress;
 import ee.ttu.util.XMLCalendarUtil;
@@ -22,6 +23,9 @@ public class CustomerConverter implements Converter<Customer, CustomerType> {
     @Autowired
     private CustomerAddressConverter customerAddressConverter;
 
+    @Autowired
+    private ContractTypeConverter contractTypeConverter;
+
     @Override
     public CustomerType convert(Customer source) {
         if (source == null) {
@@ -38,6 +42,7 @@ public class CustomerConverter implements Converter<Customer, CustomerType> {
         customerType.setCustomerType(source.getCustomerType() != null ? source.getCustomerType().getId() : null);
         customerType.setCustomerStatusType(source.getCustomerStateType() != null ? source.getCustomerStateType().getId() : null);
         customerType.setAddresses(getAddresses(source));
+        customerType.setContracts(getContracts(source));
         customerType.setModifier(getModifier(source));
 
         return customerType;
@@ -52,6 +57,17 @@ public class CustomerConverter implements Converter<Customer, CustomerType> {
         }
 
         return customerTypeAddresses;
+    }
+
+    private CustomerType.Contracts getContracts(Customer source) {
+        List<Contract> contracts = source.getContracts();
+        CustomerType.Contracts xmlContracts = OBJECT_FACTORY.createCustomerTypeContracts();
+
+        for (Contract contract : contracts) {
+            xmlContracts.getContract().add(contractTypeConverter.convert(contract));
+        }
+
+        return xmlContracts;
     }
 
     private long getModifier(Customer source) {

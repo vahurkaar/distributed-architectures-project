@@ -1,0 +1,4 @@
+<ns2:GetCustomersRequest xmlns:ns2="http://www.ttu.ee/hajusarhitektuurid">
+    <ns2:identityCode>123</ns2:identityCode>
+</ns2:GetCustomersRequest>
+

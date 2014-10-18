@@ -16,7 +16,7 @@ public class CustomerStateTypeRepositoryTest extends RepositoryTestSupport {
 
     @Before
     public void setUp() throws Exception {
-        executeSqlScript("customer_state_type_repository_test.sql", false);
+        executeSqlScript("sql/customers/customer_state_type_repository_test.sql", false);
     }
 
     @Test

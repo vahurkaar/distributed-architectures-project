@@ -65,6 +65,7 @@
         </xs:complexType>
     </xs:element>
 
+
     <xs:element name="GetCustomersRequest">
         <xs:complexType>
             <xs:choice>
@@ -118,6 +119,57 @@
     </xs:element>
 
 
+    <xs:element name="GetContractRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetContractResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="contract" type="h:ContractType" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="SaveContractRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="contract" type="h:ContractType" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="SaveContractResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="responseCode" type="xs:string" />
+                <xs:element name="description" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteContractRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="DeleteContractResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="responseCode" type="xs:string" />
+                <xs:element name="description" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
     <xs:complexType name="CustomerTypeType">
         <xs:sequence>
             <xs:element name="id" type="xs:long" />
@@ -156,7 +208,31 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="contracts" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="contract" type="h:ContractType" minOccurs="0" maxOccurs="unbounded" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="modifier" type="xs:long" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ContractType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" minOccurs="0" />
+            <xs:element name="customerId" type="xs:long" />
+            <xs:element name="contractStatusType" type="xs:long" minOccurs="0" />
+            <xs:element name="contractType" type="xs:long" minOccurs="0" />
+            <xs:element name="contractNumber" type="xs:string" />
+            <xs:element name="name" type="xs:string" />
+            <xs:element name="description" type="xs:string" minOccurs="0" />
+            <xs:element name="validFrom" type="xs:date" minOccurs="0" />
+            <xs:element name="validTo" type="xs:date" minOccurs="0" />
+            <xs:element name="conditions" type="xs:string" minOccurs="0" />
+            <xs:element name="note" type="xs:string" minOccurs="0" />
+            <xs:element name="valueAmount" type="xs:double" />
         </xs:sequence>
     </xs:complexType>
 

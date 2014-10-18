@@ -71,3 +71,26 @@
 </div>
 
 
+<div id="customerAddressesSubForm">
+    <h4><g:message code="customer.addresses.header" default="Addresses" /></h4>
+    <table>
+        <thead>
+        <tr>
+            <th style="width: 10px;">&nbsp;</th>
+            <th>Aadress</th>
+            <th style="width: 10px;"><a><img src="${assetPath(src: 'skin/database_add.png')}" /></a></th>
+        </tr>
+        </thead>
+        <tbody style="background: #eaeaea">
+        <tr>
+            <td><a><img src="${assetPath(src: 'skin/database_edit.png')}" /></a></td>
+            <td>Jejejeee</td>
+            <td><a><img src="${assetPath(src: 'skin/database_delete.png')}" /></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="addressFormModal" style="display: none">
+    <h4>Aadress</h4>
+</div>

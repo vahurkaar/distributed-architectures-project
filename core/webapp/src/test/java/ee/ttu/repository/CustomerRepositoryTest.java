@@ -25,7 +25,7 @@ public class CustomerRepositoryTest extends RepositoryTestSupport {
 
     @Before
     public void setUp() throws Exception {
-        executeSqlScript("customer_repository_test.sql", false);
+        executeSqlScript("sql/customers/customer_repository_test.sql", false);
     }
 
     @Test

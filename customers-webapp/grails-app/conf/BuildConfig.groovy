@@ -7,8 +7,8 @@ grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
-grails.tomcat.keystorePath = "C:/Users/Vahur Kaar/.keystore"
-grails.tomcat.keystorePassword = "tomcat"
+//grails.tomcat.keystorePath = "C:/Users/Vahur Kaar/.keystore"
+//grails.tomcat.keystorePassword = "tomcat"
 
 grails.project.fork = [
     // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required

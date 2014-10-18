@@ -1,0 +1,6 @@
+<SOAP-ENV:Fault xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+    <faultcode>SOAP-ENV:Server</faultcode>
+    <faultstring xml:lang="en">
+        Contract with id '12' does not exist!
+    </faultstring>
+</SOAP-ENV:Fault>

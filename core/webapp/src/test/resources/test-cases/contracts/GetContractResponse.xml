@@ -1,0 +1,16 @@
+<haj:GetContractResponse xmlns:haj="http://www.ttu.ee/hajusarhitektuurid">
+    <haj:contract>
+        <haj:id>1</haj:id>
+        <haj:customerId>1</haj:customerId>
+        <haj:contractStatusType>3</haj:contractStatusType>
+        <haj:contractType>1</haj:contractType>
+        <haj:contractNumber>222</haj:contractNumber>
+        <haj:name>Leping</haj:name>
+        <haj:description>Kirjeldus</haj:description>
+        <haj:validFrom>2000-12-12</haj:validFrom>
+        <haj:validTo>2013-12-12</haj:validTo>
+        <haj:conditions>Tingimused</haj:conditions>
+        <haj:note>Note</haj:note>
+        <haj:valueAmount>222.02</haj:valueAmount>
+    </haj:contract>
+</haj:GetContractResponse>
