@@ -1,6 +1,0 @@
-<SOAP-ENV:Fault xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
-    <faultcode>SOAP-ENV:Server</faultcode>
-    <faultstring xml:lang="en">
-        Customer does not exist!
-    </faultstring>
-</SOAP-ENV:Fault>
