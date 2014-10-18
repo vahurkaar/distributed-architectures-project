@@ -56,7 +56,7 @@ public class CustomerConverter implements Converter<Customer, CustomerType> {
             customerTypeAddresses.getAddress().add(customerAddressConverter.convert(customerAddress));
         }
 
-        return customerTypeAddresses;
+        return customerTypeAddresses.getAddress().size() > 0 ? customerTypeAddresses : null;
     }
 
     private CustomerType.Contracts getContracts(Customer source) {
@@ -67,7 +67,7 @@ public class CustomerConverter implements Converter<Customer, CustomerType> {
             xmlContracts.getContract().add(contractTypeConverter.convert(contract));
         }
 
-        return xmlContracts;
+        return xmlContracts.getContract().size() > 0 ? xmlContracts : null;
     }
 
     private long getModifier(Customer source) {

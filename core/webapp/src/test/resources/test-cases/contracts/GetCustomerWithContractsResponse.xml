@@ -8,7 +8,6 @@
         <ns2:birthDate>1999-12-12</ns2:birthDate>
         <ns2:customerStatusType>1</ns2:customerStatusType>
         <ns2:customerType>1</ns2:customerType>
-        <ns2:addresses></ns2:addresses>
         <ns2:contracts>
             <ns2:contract>
                 <ns2:id>1</ns2:id>
