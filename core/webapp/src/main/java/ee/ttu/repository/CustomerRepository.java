@@ -12,10 +12,6 @@ import java.util.List;
  */
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
-    @Query("select c from Customer c " +
-           "where trim(lower(concat(c.firstname, ' ', c.lastname))) like lower(concat('%', :name, '%'))")
-    List<Customer> findByNameLike(@Param("name") String name);
-
     Customer findByIdentityCode(String identityCode);
 
 }

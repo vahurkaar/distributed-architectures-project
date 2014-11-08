@@ -68,11 +68,13 @@
 
     <xs:element name="GetCustomersRequest">
         <xs:complexType>
-            <xs:choice>
-                <xs:element name="id" type="xs:long" />
-                <xs:element name="identityCode" type="xs:string" />
-                <xs:element name="name" type="xs:string" />
-            </xs:choice>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long" minOccurs="0" />
+                <xs:element name="identityCode" type="xs:string" minOccurs="0" />
+                <xs:element name="name" type="xs:string" minOccurs="0" />
+                <xs:element name="contractNumber" type="xs:string" minOccurs="0" />
+                <xs:element name="contractName" type="xs:string" minOccurs="0" />
+            </xs:sequence>
         </xs:complexType>
     </xs:element>
 

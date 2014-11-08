@@ -21,6 +21,9 @@ public class CustomerRepositoryTest extends RepositoryTestSupport {
     private CustomerRepository customerRepository;
 
     @Autowired
+    private CustomerJpaRepository customerJpaRepository;
+
+    @Autowired
     private CustomerStateTypeRepository customerStateTypeRepository;
 
     @Before
@@ -88,7 +91,7 @@ public class CustomerRepositoryTest extends RepositoryTestSupport {
 
     @Test
     public void testFindByNameAndIdentityCode() throws Exception {
-        List<Customer> customers = customerRepository.findByNameLike("VaH");
+        List<Customer> customers = customerJpaRepository.findCustomers("VaH", null, null);
         Customer customer = customers.get(0);
         Assert.assertEquals("Vahur", customer.getFirstname());
         Assert.assertEquals("123", customer.getIdentityCode());
@@ -102,5 +105,29 @@ public class CustomerRepositoryTest extends RepositoryTestSupport {
         Assert.assertEquals(2, customer.getAddresses().size());
         Assert.assertEquals(new Long(1), customer.getAddresses().get(0).getId());
         Assert.assertEquals(new Long(2), customer.getAddresses().get(1).getId());
+    }
+
+    @Test
+    public void testCustomerHasContracts() throws Exception {
+        Customer customer = customerRepository.findOne(1L);
+
+        Assert.assertNotNull(customer);
+        Assert.assertEquals(1, customer.getContracts().size());
+        Assert.assertEquals(new Long(1), customer.getContracts().get(0).getId());
+        Assert.assertEquals(customer.getId(), customer.getContracts().get(0).getCustomerId());
+    }
+
+    @Test
+    public void testCustomerByContractNumber() throws Exception {
+        List<Customer> customer = customerJpaRepository.findCustomers(null, "22", null);
+
+        Assert.assertEquals(1, customer.size());
+    }
+
+    @Test
+    public void testCustomerByContractName() throws Exception {
+        List<Customer> customer = customerJpaRepository.findCustomers(null, null, "lep");
+
+        Assert.assertEquals(1, customer.size());
     }
 }

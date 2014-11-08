@@ -58,7 +58,7 @@
 	<label for="customerType">
 		<g:message code="customer.customerType.label" default="Customer Type" />
 	</label>
-	<g:select id="customerType" noSelection="['':'']" name="customerType.customerTypeId" from="${customerTypes}" optionKey="customerTypeId" value="${customer?.customerType?.customerTypeId}" class="many-to-one"/>
+	<g:select id="customerType" name="customerType.customerTypeId" from="${customerTypes}" optionKey="customerTypeId" value="${customer?.customerType?.customerTypeId}" class="many-to-one"/>
 
 </div>
 

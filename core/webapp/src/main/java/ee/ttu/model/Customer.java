@@ -48,7 +48,7 @@ public class Customer extends PersistentObject {
     @JoinColumn(name = "customer")
     private List<CustomerAddress> addresses;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "customer")
     private List<Contract> contracts;
 

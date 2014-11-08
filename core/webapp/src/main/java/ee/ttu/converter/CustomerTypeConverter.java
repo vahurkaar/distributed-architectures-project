@@ -3,6 +3,7 @@ package ee.ttu.converter;
 import ee.ttu.model.Customer;
 import ee.ttu.model.CustomerAddress;
 import ee.ttu.model.classifier.CustomerStateType;
+import ee.ttu.repository.CustomerRepository;
 import ee.ttu.service.ClassifierService;
 import ee.ttu.util.XMLCalendarUtil;
 import ee.ttu.xml.AddressType;
@@ -26,13 +27,16 @@ public class CustomerTypeConverter implements Converter<CustomerType, Customer> 
     @Autowired
     private ClassifierService classifierService;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
     @Override
     public Customer convert(CustomerType source) {
         if (source == null) {
             return null;
         }
 
-        Customer customer = new Customer();
+        Customer customer = getCustomer(source);
         customer.setId(source.getId());
         customer.setFirstname(source.getFirstname());
         customer.setLastname(source.getLastname());
@@ -50,10 +54,18 @@ public class CustomerTypeConverter implements Converter<CustomerType, Customer> 
             customer.setCustomerStateType(customerStateType);
         }
 
-        customer.setAddresses(getAddresses(source));
+        customer.getAddresses().clear();
+        customer.getAddresses().addAll(getAddresses(source));
         customer.setUpdatedBy(source.getModifier());
 
         return customer;
+    }
+
+    private Customer getCustomer(CustomerType source) {
+        if (source.getId() != null) {
+            return customerRepository.findOne(source.getId());
+        }
+        return new Customer();
     }
 
     private List<CustomerAddress> getAddresses(CustomerType source) {

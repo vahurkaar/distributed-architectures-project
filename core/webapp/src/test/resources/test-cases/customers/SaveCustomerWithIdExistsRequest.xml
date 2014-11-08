@@ -1,6 +1,5 @@
 <ns2:SaveCustomerRequest xmlns:ns2="http://www.ttu.ee/hajusarhitektuurid">
     <ns2:customer>
-        <ns2:id>11</ns2:id>
         <ns2:firstname>Toomas</ns2:firstname>
         <ns2:lastname>Tom</ns2:lastname>
         <ns2:identityCode>123</ns2:identityCode>

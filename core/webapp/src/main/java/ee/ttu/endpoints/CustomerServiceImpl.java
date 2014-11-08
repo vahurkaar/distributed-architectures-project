@@ -3,9 +3,8 @@ package ee.ttu.endpoints;
 import ee.ttu.converter.*;
 import ee.ttu.exception.CoreException;
 import ee.ttu.model.Customer;
-import ee.ttu.model.classifier.*;
+import ee.ttu.repository.CustomerJpaRepository;
 import ee.ttu.repository.CustomerRepository;
-import ee.ttu.service.ClassifierService;
 import ee.ttu.xml.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -23,6 +22,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private CustomerJpaRepository customerJdbcRepository;
 
     @Autowired
     private CustomerConverter customerConverter;
@@ -48,11 +50,10 @@ public class CustomerServiceImpl implements CustomerService {
             return getCustomersResponse;
         }
 
-        if (request.getName() != null) {
-            List<Customer> customers = customerRepository.findByNameLike(request.getName());
-            for (Customer customer : customers) {
-                getCustomersResponse.getCustomer().add(customerConverter.convert(customer));
-            }
+        List<Customer> customers = customerJdbcRepository.findCustomers(
+                request.getName(), request.getContractNumber(), request.getContractName());
+        for (Customer customer : customers) {
+            getCustomersResponse.getCustomer().add(customerConverter.convert(customer));
         }
 
         return getCustomersResponse;

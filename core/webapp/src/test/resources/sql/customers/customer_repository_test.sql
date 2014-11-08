@@ -9,3 +9,6 @@ insert into public.cst_address (customer, zip, house, address, county, parish, t
 values (1, 'zip', 'house', 'address', 'county', 'parish', 'town_county', null, 'phone', 'sms', 'mobile', 'email', 'note', 2, now(), now(), null, null);
 insert into public.cst_address (customer, zip, house, address, county, parish, town_county, address_type, phone, sms, mobile, email, note, country, created, updated, created_by, updated_by)
 values (1, 'zip 2', 'house 2', 'address 2', 'county 2', 'parish 2', 'town_county 2', null, 'phone 2', 'sms 2', 'mobile 2', 'email 2', 'note 2', 1, now(), now(), null, null);
+
+insert into public.contract (customer, contract_status_type, contract_type, cnt_number, name, description, valid_from, valid_to, created, updated, created_by, updated_by, conditions, note, value_amount)
+values (1, null, null, '222', 'Leping', 'Kirjeldus', now(), now(), now(), now(), 0, 0, 'Tingimused', 'Note', 222.02);
