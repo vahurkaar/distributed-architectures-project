@@ -6,7 +6,8 @@ VALUES
   (3, 'Kehtiv'),
   (4, 'Peatatatud'),
   (5, 'Lõpetatud'),
-  (6, 'Lõpetatud uuega');
+  (6, 'Lõpetatud uuega'),
+  (7, 'Kustutatud');
 
 insert into public.customer (first_name, last_name, identity_code, note, created, updated, created_by, updated_by, birth_date, cst_type, cst_state_type)
 values ('Vahur', 'Kaar', '123', 'Notes', now(), now(), null, null, now(), null, null);

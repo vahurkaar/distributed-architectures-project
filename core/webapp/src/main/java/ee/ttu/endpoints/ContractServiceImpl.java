@@ -4,7 +4,10 @@ import ee.ttu.converter.ContractConverter;
 import ee.ttu.converter.ContractTypeConverter;
 import ee.ttu.exception.CoreException;
 import ee.ttu.model.Contract;
+import ee.ttu.model.Customer;
 import ee.ttu.repository.ContractRepository;
+import ee.ttu.repository.CustomerRepository;
+import ee.ttu.service.*;
 import ee.ttu.xml.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -22,10 +25,16 @@ public class ContractServiceImpl implements ContractService {
     private ContractRepository contractRepository;
 
     @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
     private ContractTypeConverter contractTypeConverter;
 
     @Autowired
     private ContractConverter contractConverter;
+
+    @Autowired
+    private ee.ttu.service.ClassifierService classifierService;
 
     @PayloadRoot(namespace = NAMESPACE, localPart = GET_CONTRACT_REQUEST)
     @ResponsePayload
@@ -50,10 +59,11 @@ public class ContractServiceImpl implements ContractService {
         Contract contract = contractConverter.convert(request.getContract());
         validateContract(contract);
 
-        contractRepository.save(contract);
+        Contract savedContract = contractRepository.save(contract);
         SaveContractResponse saveContractResponse = new SaveContractResponse();
         saveContractResponse.setResponseCode("OK");
         saveContractResponse.setDescription("Successfully saved contract!");
+        saveContractResponse.setContract(contractTypeConverter.convert(savedContract));
         return saveContractResponse;
     }
 
@@ -85,7 +95,9 @@ public class ContractServiceImpl implements ContractService {
             throw new CoreException(String.format("Contract with id '%s' does not exist!", request.getId()));
         }
 
-        contractRepository.delete(request.getId());
+        Contract contract = contractRepository.findOne(request.getId());
+        contract.setContractStatusType(classifierService.findContractStatusTypeByName("Kustutatud"));
+        contractRepository.save(contract);
 
         DeleteContractResponse response = new DeleteContractResponse();
         response.setResponseCode("OK");

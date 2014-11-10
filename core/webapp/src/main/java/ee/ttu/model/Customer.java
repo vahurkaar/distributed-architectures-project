@@ -2,6 +2,9 @@ package ee.ttu.model;
 
 import ee.ttu.model.classifier.CustomerStateType;
 import ee.ttu.model.classifier.CustomerType;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -50,6 +53,8 @@ public class Customer extends PersistentObject {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "customer")
+    @Where(clause = "contract_status_type is null or contract_status_type != (select contract_status_type.contract_status_type " +
+            "from public.contract_status_type where contract_status_type.name = 'Kustutatud')")
     private List<Contract> contracts;
 
     public Long getId() {

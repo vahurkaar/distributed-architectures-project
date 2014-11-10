@@ -72,8 +72,11 @@ public class CustomerTypeConverter implements Converter<CustomerType, Customer> 
         CustomerType.Addresses customerAddresses = source.getAddresses();
         List<CustomerAddress> convertedAddresses = new ArrayList<>();
 
-        for (AddressType addressType : customerAddresses.getAddress()) {
-            convertedAddresses.add(addressTypeConverter.convert(addressType));
+        if (customerAddresses != null) {
+            for (AddressType addressType : customerAddresses.getAddress()) {
+                convertedAddresses.add(addressTypeConverter.convert(addressType));
+            }
+
         }
 
         return convertedAddresses;

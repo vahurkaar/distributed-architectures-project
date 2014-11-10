@@ -25,7 +25,7 @@ public class ContractConverter implements Converter<ContractType, Contract> {
     public Contract convert(ContractType source) {
         Contract contract = new Contract();
         contract.setId(source.getId());
-        contract.setCustomerId(source.getId());
+        contract.setCustomerId(source.getCustomerId());
         contract.setContractNumber(source.getContractNumber());
         contract.setName(source.getName());
         contract.setDescription(source.getDescription());

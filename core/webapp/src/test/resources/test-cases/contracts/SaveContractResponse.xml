@@ -1,4 +1,18 @@
 <ns2:SaveContractResponse xmlns:ns2="http://www.ttu.ee/hajusarhitektuurid">
     <ns2:responseCode>OK</ns2:responseCode>
     <ns2:description>Successfully saved contract!</ns2:description>
+    <ns2:contract>
+        <ns2:id>2</ns2:id>
+        <ns2:customerId>1</ns2:customerId>
+        <ns2:contractStatusType>3</ns2:contractStatusType>
+        <ns2:contractType>1</ns2:contractType>
+        <ns2:contractNumber>333</ns2:contractNumber>
+        <ns2:name>Leping 2</ns2:name>
+        <ns2:description>Kirjeldus</ns2:description>
+        <ns2:validFrom>2000-12-12</ns2:validFrom>
+        <ns2:validTo>2013-12-12</ns2:validTo>
+        <ns2:conditions>Tingimused</ns2:conditions>
+        <ns2:note>Note</ns2:note>
+        <ns2:valueAmount>222.02</ns2:valueAmount>
+    </ns2:contract>
 </ns2:SaveContractResponse>

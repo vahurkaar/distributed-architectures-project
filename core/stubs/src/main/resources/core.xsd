@@ -48,6 +48,34 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="GetContractTypesRequest">
+        <xs:complexType>
+            <xs:sequence></xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetContractTypesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="contractType" type="h:ContractTypeType" maxOccurs="unbounded" minOccurs="0" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetContractStatusTypesRequest">
+        <xs:complexType>
+            <xs:sequence></xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetContractStatusTypesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="contractStatusType" type="h:ContractStatusTypeType" maxOccurs="unbounded" minOccurs="0" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
 
     <xs:element name="GetUserRequest">
         <xs:complexType>
@@ -150,6 +178,7 @@
             <xs:sequence>
                 <xs:element name="responseCode" type="xs:string" />
                 <xs:element name="description" type="xs:string" />
+                <xs:element name="contract" type="h:ContractType" />
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -187,6 +216,20 @@
     </xs:complexType>
 
     <xs:complexType name="CountryType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" />
+            <xs:element name="name" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ContractTypeType">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long" />
+            <xs:element name="name" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ContractStatusTypeType">
         <xs:sequence>
             <xs:element name="id" type="xs:long" />
             <xs:element name="name" type="xs:string" />

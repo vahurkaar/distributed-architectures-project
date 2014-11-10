@@ -17,7 +17,7 @@ public class ContractTypeConverter implements Converter<Contract, ContractType> 
     public ContractType convert(Contract source) {
         ContractType contractType = new ContractType();
         contractType.setId(source.getId());
-        contractType.setCustomerId(source.getId());
+        contractType.setCustomerId(source.getCustomerId());
         contractType.setContractType(source.getContractType() != null ? source.getContractType().getId() : null);
         contractType.setContractStatusType(source.getContractStatusType() != null ? source.getContractStatusType().getId() : null);
         contractType.setContractNumber(source.getContractNumber());

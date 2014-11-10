@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/static/stylesheets/main.css" />
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/static/stylesheets/application.css" />
 
-    <script src="${pageContext.servletContext.contextPath}/static/javascripts/application.js}"></script>
+    <script src="${pageContext.servletContext.contextPath}/static/javascripts/jquery-1.11.1.js"></script>
+    <script src="${pageContext.servletContext.contextPath}/static/javascripts/application.js"></script>
     <decorator:head />
 </head>
 <body>

@@ -2,6 +2,8 @@ package ee.ttu.model;
 
 import ee.ttu.model.classifier.ContractStatusType;
 import ee.ttu.model.classifier.ContractType;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
