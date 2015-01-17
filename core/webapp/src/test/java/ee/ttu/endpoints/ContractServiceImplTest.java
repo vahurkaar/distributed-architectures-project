@@ -1,6 +1,7 @@
 package ee.ttu.endpoints;
 
 import ee.ttu.configuration.ServiceConfiguration;
+import ee.ttu.repository.EndpointTestSupport;
 import ee.ttu.repository.RepositoryTestSupport;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -26,17 +27,11 @@ import static org.springframework.ws.test.server.ResponseMatchers.payload;
 @WebAppConfiguration
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class,
         classes = {ServiceConfiguration.class})
-public class ContractServiceImplTest extends RepositoryTestSupport {
-
-    @Autowired
-    private ApplicationContext applicationContext;
-
-    private MockWebServiceClient client;
+public class ContractServiceImplTest extends EndpointTestSupport {
 
     @Before
     public void setUp() throws Exception {
-        client = MockWebServiceClient.createClient(applicationContext);
-        executeSqlScript("sql/contracts/services_test.sql", false);
+        initialize("sql/contracts/services_test.sql", "test-cases/contracts/");
     }
 
     @Test
@@ -84,11 +79,4 @@ public class ContractServiceImplTest extends RepositoryTestSupport {
         executeServiceTest("GetCustomerWithContracts");
     }
 
-    private void executeServiceTest(String testCase) throws IOException {
-        Source request = new ResourceSource(new ClassPathResource("test-cases/contracts/" + testCase + "Request.xml"));
-        Source response = new ResourceSource(new ClassPathResource("test-cases/contracts/" + testCase + "Response.xml"));
-
-        client.sendRequest(withPayload(request))
-                .andExpect(payload(response));
-    }
 }

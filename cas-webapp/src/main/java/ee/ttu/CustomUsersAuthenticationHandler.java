@@ -20,6 +20,8 @@ public class CustomUsersAuthenticationHandler extends AbstractUsernamePasswordAu
 
     private CoreWebServiceClient coreWebServiceClient;
 
+    private AuthenticationLoggingService authenticationLoggingService;
+
     /** {@inheritDoc} */
     @Override
     protected final HandlerResult authenticateUsernamePasswordInternal(final UsernamePasswordCredential credential)
@@ -32,13 +34,16 @@ public class CustomUsersAuthenticationHandler extends AbstractUsernamePasswordAu
         logger.debug("Found password from core for user {}", username);
         if (cachedPassword == null) {
             logger.debug("{} was not found in the map.", username);
+            authenticationLoggingService.logAuthentication(credential.getUsername(), credential.getPassword(), "User was not found in map!");
             throw new AccountNotFoundException(username + " not found in backing map.");
         }
 
         final String encodedPassword = this.getPasswordEncoder().encode(credential.getPassword());
         if (!cachedPassword.equals(encodedPassword)) {
+            authenticationLoggingService.logAuthentication(credential.getUsername(), credential.getPassword(), "Invalid credentials!");
             throw new FailedLoginException();
         }
+        authenticationLoggingService.logAuthentication(credential.getUsername(), credential.getPassword(), "Success!");
         return createHandlerResult(credential, new SimplePrincipal(username), null);
     }
 
@@ -64,5 +69,9 @@ public class CustomUsersAuthenticationHandler extends AbstractUsernamePasswordAu
 
     public void setCoreWebServiceClient(CoreWebServiceClient coreWebServiceClient) {
         this.coreWebServiceClient = coreWebServiceClient;
+    }
+
+    public void setAuthenticationLoggingService(AuthenticationLoggingService authenticationLoggingService) {
+        this.authenticationLoggingService = authenticationLoggingService;
     }
 }

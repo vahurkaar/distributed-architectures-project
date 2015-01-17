@@ -12,7 +12,6 @@ import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
@@ -21,13 +20,11 @@ import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.cas.web.authentication.ServiceAuthenticationDetailsSource;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 
 /**
@@ -56,15 +53,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public SingleSignOutFilter singleSignOutFilter() {
         return new SingleSignOutFilter();
-    }
-
-    @Bean
-    public LogoutFilter logoutFilter() {
-        LogoutFilter logoutFilter = new LogoutFilter(environment.getProperty("cas.location") + "/logout",
-                securityContextLogoutHandler());
-        logoutFilter.setFilterProcessesUrl("/j_spring_cas_security_logout");
-
-        return logoutFilter;
     }
 
     @Bean
@@ -162,15 +150,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .addFilter(casAuthenticationFilter())
                 .exceptionHandling()
                     .authenticationEntryPoint(casAuthenticationEntryPoint())
                     .and()
                 .authorizeRequests()
                     .antMatchers("/static/**").permitAll()
+                    .antMatchers("/public/**").permitAll()
                     .anyRequest().authenticated()
                     .and()
-                .addFilterBefore(logoutFilter(), LogoutFilter.class)
                 .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class)
                 .addFilter(casAuthenticationFilter())
                 .logout();

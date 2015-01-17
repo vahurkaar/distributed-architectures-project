@@ -7,18 +7,19 @@ import ee.ttu.service.ClassifierService;
 import ee.ttu.service.ContractsService;
 import ee.ttu.service.CustomersService;
 import ee.ttu.util.XMLGregorianCalendarEditor;
+import ee.ttu.validator.ContractFormValidator;
 import ee.ttu.xml.ContractStatusTypeType;
 import ee.ttu.xml.ContractType;
 import ee.ttu.xml.ContractTypeType;
 import ee.ttu.xml.CustomerType;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ws.soap.client.SoapFaultClientException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -39,6 +40,9 @@ public class ContractController {
 
     @Autowired
     private CustomersService customersService;
+
+    @Autowired
+    private ContractFormValidator contractFormValidator;
 
     @ModelAttribute
     public List<ContractTypeType> getContractTypes() {
@@ -92,15 +96,31 @@ public class ContractController {
     }
 
     @RequestMapping(value = "/save")
-    public ModelAndView saveContract(@ModelAttribute ContractForm contractForm) {
-        ContractSavingResult result = contractsService.saveContract(contractForm);
+    @ResponseBody
+    public String saveContract(@ModelAttribute ContractForm contractForm, Errors errors) {
+        contractFormValidator.validate(contractForm, errors);
+
+        if (errors.hasErrors()) {
+            return errors.getAllErrors().get(0).getDefaultMessage();
+        }
+
+        ContractSavingResult result = saveContractAndRegisterErrors(contractForm);
         if (result.getResult().equals("OK")) {
             customersService.downgradeCustomerIfNeccesary(contractForm.getCustomerId());
-            return new ModelAndView("redirect:/contract/view?id=" + result.getContractType().getId());
+            return "OK";
         } else {
-            ModelAndView modelAndView = new ModelAndView("contract/view");
-            modelAndView.addObject("error", result.getMessage());
-            return modelAndView;
+            return result.getMessage();
+        }
+    }
+
+    private ContractSavingResult saveContractAndRegisterErrors(ContractForm contractForm) {
+        try {
+            return contractsService.saveContract(contractForm);
+        } catch (SoapFaultClientException ex) {
+            ContractSavingResult result = new ContractSavingResult();
+            result.setResult("NOT_OK");
+            result.setMessage(ex.getMessage());
+            return result;
         }
     }
 

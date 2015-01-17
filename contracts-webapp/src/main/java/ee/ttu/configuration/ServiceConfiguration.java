@@ -23,7 +23,8 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 @ComponentScan(basePackages = {
         "ee.ttu.controller",
         "ee.ttu.service.impl",
-        "ee.ttu.converter"
+        "ee.ttu.converter",
+        "ee.ttu.validator"
 })
 @PropertySource(value = "classpath:application.properties")
 @EnableWebMvc

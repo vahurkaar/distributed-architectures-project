@@ -16,8 +16,9 @@
     <link rel="apple-touch-icon" sizes="114x114" href="${pageContext.servletContext.contextPath}/static/images/apple-touch-icon-retina.png">
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/static/stylesheets/main.css" />
     <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/static/stylesheets/application.css" />
-
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
     <script src="${pageContext.servletContext.contextPath}/static/javascripts/jquery-1.11.1.js"></script>
+    <script src="${pageContext.servletContext.contextPath}/static/javascripts/jquery-ui.js"></script>
     <script src="${pageContext.servletContext.contextPath}/static/javascripts/application.js"></script>
     <decorator:head />
 </head>
@@ -29,5 +30,16 @@
 </div>
 <decorator:body />
 <div class="footer" role="contentinfo"></div>
+<div id="spinner" style="display: none">
+    <div style="margin-top: 75px; text-align: center">
+        <div style="">
+            <span>Loading...</span>
+            <br />
+            <br />
+            <c:url var="spinnerUrl" value="/static/images/spinner.gif" />
+            <img src="${spinnerUrl}" alt="Loading..." style="width: 20px;"/>
+        </div>
+    </div>
+</div>
 </body>
 </html>

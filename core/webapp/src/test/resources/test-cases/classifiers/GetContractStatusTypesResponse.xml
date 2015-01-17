@@ -1,0 +1,30 @@
+<ns2:GetContractStatusTypesResponse xmlns:ns2="http://www.ttu.ee/hajusarhitektuurid">
+    <ns2:contractStatusType>
+        <ns2:id>1</ns2:id>
+        <ns2:name>Projekt</ns2:name>
+    </ns2:contractStatusType>
+    <ns2:contractStatusType>
+        <ns2:id>2</ns2:id>
+        <ns2:name>Kinnitatud</ns2:name>
+    </ns2:contractStatusType>
+    <ns2:contractStatusType>
+        <ns2:id>3</ns2:id>
+        <ns2:name>Kehtiv</ns2:name>
+    </ns2:contractStatusType>
+    <ns2:contractStatusType>
+        <ns2:id>4</ns2:id>
+        <ns2:name>Peatatatud</ns2:name>
+    </ns2:contractStatusType>
+    <ns2:contractStatusType>
+        <ns2:id>5</ns2:id>
+        <ns2:name>Lõpetatud</ns2:name>
+    </ns2:contractStatusType>
+    <ns2:contractStatusType>
+        <ns2:id>6</ns2:id>
+        <ns2:name>Lõpetatud uuega</ns2:name>
+    </ns2:contractStatusType>
+    <ns2:contractStatusType>
+        <ns2:id>7</ns2:id>
+        <ns2:name>Kustutatud</ns2:name>
+    </ns2:contractStatusType>
+</ns2:GetContractStatusTypesResponse>

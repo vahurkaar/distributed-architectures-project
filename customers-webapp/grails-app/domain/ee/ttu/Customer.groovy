@@ -4,6 +4,11 @@ import ee.ttu.classifier.CustomerStatusType
 import ee.ttu.classifier.CustomerType
 import org.apache.commons.lang.StringUtils
 
+import grails.validation.Validateable
+import org.apache.commons.collections.ListUtils
+import org.apache.commons.collections.Factory
+
+@Validateable
 class Customer {
 
     Long customerId
@@ -15,11 +20,7 @@ class Customer {
     CustomerType customerType
     CustomerStatusType customerStatusType
     Long modifier
-
-    static hasMany = [addresses: CustomerAddress]
-
-    static constraints = {
-    }
+    List<CustomerAddress> addresses = ListUtils.lazyList([], {new CustomerAddress()} as Factory)
 
     String getFullName() {
         return (StringUtils.defaultString(firstname, "") + " " +
@@ -39,7 +40,6 @@ class Customer {
                 ", customerType=" + customerType +
                 ", customerStateType=" + customerStatusType +
                 ", modifier=" + modifier +
-                ", addresses=" + addresses +
                 '}';
     }
 }

@@ -11,46 +11,21 @@
 </head>
 <body>
 
-<div class="nav" role="navigation">
-    <ul>
-        <li>
-            <c:url value="/" var="homeUrl" />
-            <a class="home" href="${homeUrl}">
-                <spring:message code="navigation.home" />
-            </a>
-        </li>
-        <li>
-            <a href="<spring:message code='navigation.customers.url' />">
-                <spring:message code="navigation.customers" />
-            </a>
-        </li>
-        <li style="float: right">
-            <c:url value="/logout" var="logoutUrl" />
-            <form name="logoutForm" method="POST" action="${logoutUrl}">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <a href="javascript:document.logoutForm.submit()"><spring:message code="navigation.logout" /></a>
-            </form>
-        </li>
-        <li style="float: right">
-            <span><a>Welcome, <sec:authentication property="principal.username" /></a></span>
-        </li>
-    </ul>
-</div>
+<%@ include file="../include/navigation.jspf" %>
 
 <div id="contractView" class="content scaffold-list" role="main">
     <h1><spring:message code="form.contracts.customer.header" /></h1>
     <c:if test="${suggestStatusUpgrade}">
-        <div style="background: pink; margin: 10px; padding: 10px;">
+        <div id="upgradeCustomerDiv" style="background: pink; margin: 10px; padding: 10px;">
             <p><spring:message code="form.contracts.customer.special" /></p>
             <p><spring:message code="form.contracts.customer.upgradeQuestion" /></p>
-            <button onclick="$('#upgradeCustomerButton').click();">
+            <button id="upgradeCustomerButotn">
                 <spring:message code="form.contracts.customer.upgrade" />
             </button>
-        </p></div>
+        </div>
 
         <c:url var="upgradeUrl" value="/customer/upgrade" />
-        <form action="${upgradeUrl}" method="POST" style="display: none">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <form id="upgradeCustomerForm" action="${upgradeUrl}" method="POST" style="display: none">
             <input type="hidden" name="id" value="${customerForm.id}" />
             <input type="submit" id="upgradeCustomerButton" />
         </form>
@@ -144,6 +119,23 @@
     </form:form>
 
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#upgradeCustomerButotn').click(function() {
+            $.ajax({
+                url: $('#upgradeCustomerForm').attr('action'),
+                type: "POST",
+                data: $('#upgradeCustomerForm').serializeArray()
+            }).done(function(data) {
+                $('#upgradeCustomerDiv').html('Success!');
+                setTimeout("location.reload();", 1500);
+            });
+
+            return false;
+        });
+    })
+</script>
 
 </body>
 

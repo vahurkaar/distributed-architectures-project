@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
     <description>
         Web service template configuration. The web service template is going to be connecting to the Core Application
     </description>
 
-    <bean id="coreWebServiceClient" class="ee.ttu.CoreWebServiceClient">
-        <property name="defaultUri" value="http://localhost:8088/core/coreService/"/>
+    <task:annotation-driven executor="executor" />
+    <task:executor id="executor" pool-size="5"/>
+
+    <bean id="webServiceGatewaySupport" class="org.springframework.ws.client.core.support.WebServiceGatewaySupport" abstract="true">
+        <property name="defaultUri" value="http://192.168.1.16:8080/core/coreService/"/>
+        <!--<property name="defaultUri" value="http://localhost:8088/core/coreService/"/>-->
         <property name="marshaller" ref="marshaller" />
         <property name="unmarshaller" ref="marshaller" />
     </bean>
+
+    <bean id="authenticationLoggingService" class="ee.ttu.AuthenticationLoggingServiceImpl" parent="webServiceGatewaySupport" />
+
+    <bean id="coreWebServiceClient" class="ee.ttu.CoreWebServiceClient" parent="webServiceGatewaySupport" />
 
     <bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
         <property name="contextPath" value="ee.ttu.xml" />

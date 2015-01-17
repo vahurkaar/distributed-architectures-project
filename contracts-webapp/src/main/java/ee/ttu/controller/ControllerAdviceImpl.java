@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ws.WebServiceException;
+import org.springframework.ws.soap.client.SoapFaultClientException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -22,13 +23,20 @@ public class ControllerAdviceImpl {
 
     @InitBinder
     protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
-        binder.registerCustomEditor(XMLGregorianCalendar.class, new XMLGregorianCalendarEditor("dd-MM-yyyy"));
+        binder.registerCustomEditor(XMLGregorianCalendar.class, new XMLGregorianCalendarEditor("yyyy-MM-dd"));
     }
 
     @ExceptionHandler(value = WebServiceException.class)
     public ModelAndView handleWebServiceException(WebServiceException ex) {
         ModelAndView modelAndView = new ModelAndView("error/webServiceException");
         modelAndView.addObject("message", ex.getRootCause().getMessage());
+        return modelAndView;
+    }
+
+    @ExceptionHandler(value = SoapFaultClientException.class)
+    public ModelAndView handleSoapFaultClientException(SoapFaultClientException ex) {
+        ModelAndView modelAndView = new ModelAndView("error/webServiceException");
+        modelAndView.addObject("message", ex.getMessage());
         return modelAndView;
     }
 

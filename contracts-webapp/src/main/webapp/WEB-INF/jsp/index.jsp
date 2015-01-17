@@ -10,38 +10,13 @@
 </head>
 <body>
 
-<div class="nav" role="navigation">
-    <ul>
-        <li>
-            <c:url value="/" var="homeUrl" />
-            <a class="home" href="${homeUrl}">
-                <spring:message code="navigation.home" />
-            </a>
-        </li>
-        <li>
-            <a href="<spring:message code='navigation.customers.url' />">
-                <spring:message code="navigation.customers" />
-            </a>
-        </li>
-        <li style="float: right">
-            <c:url value="/logout" var="logoutUrl" />
-            <form name="logoutForm" method="POST" action="${logoutUrl}">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <a href="javascript:document.logoutForm.submit()"><spring:message code="navigation.logout" /></a>
-            </form>
-        </li>
-        <li style="float: right">
-            <span><a>Welcome, <sec:authentication property="principal.username" /></a></span>
-        </li>
-    </ul>
-</div>
+<%@ include file="include/navigation.jspf" %>
 
 <div id="contractsSearchForm" class="content scaffold-list" role="main">
     <h1><spring:message code="form.contracts.search.header" /></h1>
 
     <c:url var="contractsSearchUrl" value="/searchContracts" />
     <form:form modelAttribute="contractsSearchForm" method="POST" action="${contractsSearchUrl}">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
         <div class="fieldcontain">
             <form:label path="customerName"><spring:message code="form.contracts.search.customerName" /></form:label>

@@ -41,13 +41,10 @@ public class CustomerServiceImpl implements CustomerService {
         Customer singleCustomer = null;
         if (request.getId() != null) {
             singleCustomer = customerRepository.findOne(request.getId());
+            return buildCustomersResponse(getCustomersResponse, singleCustomer);
         } else if (request.getIdentityCode() != null) {
             singleCustomer = customerRepository.findByIdentityCode(request.getIdentityCode());
-        }
-
-        if (singleCustomer != null) {
-            getCustomersResponse.getCustomer().add(customerConverter.convert(singleCustomer));
-            return getCustomersResponse;
+            return buildCustomersResponse(getCustomersResponse, singleCustomer);
         }
 
         List<Customer> customers = customerJdbcRepository.findCustomers(
@@ -56,6 +53,11 @@ public class CustomerServiceImpl implements CustomerService {
             getCustomersResponse.getCustomer().add(customerConverter.convert(customer));
         }
 
+        return getCustomersResponse;
+    }
+
+    private GetCustomersResponse buildCustomersResponse(GetCustomersResponse getCustomersResponse, Customer singleCustomer) {
+        getCustomersResponse.getCustomer().add(customerConverter.convert(singleCustomer));
         return getCustomersResponse;
     }
 

@@ -22,6 +22,7 @@ class CustomerValidationService {
     }
 
     def validateEmptyFields(Customer customer) {
+        log.error(customer);
         if (StringUtils.isEmpty(customer.identityCode)) {
             customer.errors.rejectValue('identityCode', 'default.blank.message.identityCode')
         }

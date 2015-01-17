@@ -1,0 +1,22 @@
+<div class="nav" role="navigation">
+    <ul>
+        <li>
+            <c:url value="/" var="homeUrl" />
+            <a class="home" href="${homeUrl}">
+                <spring:message code="navigation.home" />
+            </a>
+        </li>
+        <li>
+            <a href="<spring:message code='navigation.customers.url' />">
+                <spring:message code="navigation.customers" />
+            </a>
+        </li>
+        <li style="float: right">
+            <c:url value="/logout.do" var="logoutUrl" />
+            <a href="${logoutUrl}"><spring:message code="navigation.logout" /></a>
+        </li>
+        <li style="float: right">
+            <span><a>Welcome, <sec:authentication property="principal.username" /></a></span>
+        </li>
+    </ul>
+</div>

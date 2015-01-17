@@ -1,0 +1,7 @@
+<ns2:GetUserResponse xmlns:ns2="http://www.ttu.ee/hajusarhitektuurid">
+    <ns2:user>
+        <ns2:id>1</ns2:id>
+        <ns2:username>user</ns2:username>
+        <ns2:password>pass</ns2:password>
+    </ns2:user>
+</ns2:GetUserResponse>

@@ -1,0 +1,6 @@
+<ns2:GetContractTypesResponse xmlns:ns2="http://www.ttu.ee/hajusarhitektuurid">
+    <ns2:contractType>
+        <ns2:id>1</ns2:id>
+        <ns2:name>Tavaleping</ns2:name>
+    </ns2:contractType>
+</ns2:GetContractTypesResponse>

@@ -200,6 +200,24 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="LogAuthRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="username" type="xs:string" />
+                <xs:element name="password" type="xs:string" />
+                <xs:element name="result" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="LogAuthResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="result" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
 
     <xs:complexType name="CustomerTypeType">
         <xs:sequence>

@@ -1,6 +1,7 @@
 package ee.ttu.configuration;
 
 import com.opensymphony.sitemesh.webapp.SiteMeshFilter;
+import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;

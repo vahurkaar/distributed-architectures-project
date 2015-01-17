@@ -5,17 +5,6 @@
     </g:if>
     <ol class="property-list customer">
 
-        <g:if test="${customer?.addresses}">
-        <li class="fieldcontain">
-            <span id="addresses-label" class="property-label"><g:message code="customer.addresses.label" default="Addresses" /></span>
-
-                <g:each in="${customer.addresses}" var="a">
-                <span class="property-value" aria-labelledby="addresses-label"><g:link controller="customerAddress" action="show" id="${a.id}">${a?.encodeAsHTML()}</g:link></span>
-                </g:each>
-
-        </li>
-        </g:if>
-
         <g:if test="${customer?.birthDate}">
         <li class="fieldcontain">
             <span id="birthDate-label" class="property-label"><g:message code="customer.birthDate.label" default="Birth Date" /></span>

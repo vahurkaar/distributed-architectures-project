@@ -11,6 +11,10 @@
 
 $(document).ready(function () {
 
+    $(".datepicker").datepicker({
+        dateFormat: "yy-mm-dd"
+    });
+
     var showSpinner = function() {
         $("#spinner").fadeIn('fast');
     };

@@ -101,7 +101,7 @@ log4j.main = {
     //
     appenders {
         console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-        rollingFile name:'file', file:'C:/Development/projects/temp/customers.log', maxFileSize:'50MB', maxBackupIndex:2
+        rollingFile name:'file', file:'/home/t143673/apache-tomcat-7.0.56/logs/customers.log', maxFileSize:'50MB', maxBackupIndex:2
         rollingFile name:'stacktrace', file:'stacktrace.log', maxFileSize:'5MB', maxBackupIndex:2
     }
 
@@ -124,9 +124,9 @@ log4j.main = {
 
 grails.plugin.springsecurity.cas.active = true
 grails.plugin.springsecurity.cas.loginUri = '/login'
-grails.plugin.springsecurity.cas.serviceUrl = 'http://localhost:8444/customers/j_spring_cas_security_check'
-grails.plugin.springsecurity.cas.serverUrlPrefix = 'http://localhost:8443/cas'
-grails.plugin.springsecurity.cas.proxyCallbackUrl = 'http://localhost:8444/customers/secure/receptor'
+grails.plugin.springsecurity.cas.serviceUrl = 'https://192.168.1.11:7777/customers/j_spring_cas_security_check'
+grails.plugin.springsecurity.cas.serverUrlPrefix = 'https://192.168.1.11:7777/cas'
+grails.plugin.springsecurity.cas.proxyCallbackUrl = 'https://192.168.1.11:7777/customers/secure/receptor'
 grails.plugin.springsecurity.cas.proxyReceptorUrl = '/secure/receptor'
 grails.plugin.springsecurity.cas.serverUrlEncoding = 'UTF-8'
 grails.plugin.springsecurity.cas.sendRenew = false
@@ -136,7 +136,7 @@ grails.plugin.springsecurity.cas.serviceParameter = 'service'
 grails.plugin.springsecurity.cas.filterProcessesUrl = '/j_spring_cas_security_check'
 grails.plugin.springsecurity.cas.useSingleSignout = true
 
-grails.plugin.springsecurity.logout.afterLogoutUrl = "http://localhost:8443/cas/logout?service=http%3A%2F%2Flocalhost%3A8444%2Fcustomers"
+grails.plugin.springsecurity.logout.afterLogoutUrl = "https://192.168.1.11:7777/cas/logout?service=https%3A%2F%2F192.168.1.11%3A7777%2Fcustomers"
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'ee.ttu.User'
@@ -151,6 +151,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
         '/**/css/**':                     ['permitAll'],
         '/**/images/**':                  ['permitAll'],
         '/**/favicon.ico':                ['permitAll'],
-        '/secure/receptor':               ['permitAll']
+        '/secure/receptor':               ['permitAll'],
+        '/j_spring_cas_security_check':   ['permitAll']
 ]
 

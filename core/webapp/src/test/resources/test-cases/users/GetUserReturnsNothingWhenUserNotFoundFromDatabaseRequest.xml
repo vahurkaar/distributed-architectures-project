@@ -1,0 +1,3 @@
+<ns2:GetUserRequest xmlns:ns2="http://www.ttu.ee/hajusarhitektuurid">
+    <ns2:username>aaa</ns2:username>
+</ns2:GetUserRequest>

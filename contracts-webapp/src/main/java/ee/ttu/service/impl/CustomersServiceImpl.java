@@ -95,9 +95,11 @@ public class CustomersServiceImpl implements CustomersService {
     private Double findActiveContractsSum(CustomerType customerType) {
         Double sum = 0.0;
         Long activeContractStatusTypeId = getContractStatusTypeByName(environment.getProperty("customer.activeContractStatusType"));
-        for (ContractType contract : customerType.getContracts().getContract()) {
-            if (contract.getContractStatusType().equals(activeContractStatusTypeId)) {
-                sum += contract.getValueAmount();
+        if (customerType.getContracts() != null) {
+            for (ContractType contract : customerType.getContracts().getContract()) {
+                if (activeContractStatusTypeId.equals(contract.getContractStatusType())) {
+                    sum += contract.getValueAmount();
+                }
             }
         }
 
@@ -106,7 +108,7 @@ public class CustomersServiceImpl implements CustomersService {
 
     private Long getContractStatusTypeByName(String name) {
         for (ContractStatusTypeType contractStatusTypeType : classifierService.getContractStatusTypes()) {
-            if (contractStatusTypeType.getName().equals(name)) {
+            if (name.equals(contractStatusTypeType.getName())) {
                 return contractStatusTypeType.getId();
             }
         }
@@ -116,7 +118,7 @@ public class CustomersServiceImpl implements CustomersService {
 
     private Long getCustomerTypeByName(List<CustomerTypeType> customerTypeTypes, String thresholdCustomerType) {
         for (CustomerTypeType customerTypeType : customerTypeTypes) {
-            if (customerTypeType.getName().equals(thresholdCustomerType)) {
+            if (thresholdCustomerType.equals(customerTypeType.getName())) {
                 return customerTypeType.getId();
             }
         }

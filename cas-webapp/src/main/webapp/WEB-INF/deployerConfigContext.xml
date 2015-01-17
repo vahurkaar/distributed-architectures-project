@@ -101,6 +101,7 @@
     <bean id="primaryAuthenticationHandler"
           class="ee.ttu.CustomUsersAuthenticationHandler">
         <property name="coreWebServiceClient" ref="coreWebServiceClient" />
+        <property name="authenticationLoggingService" ref="authenticationLoggingService" />
         <property name="passwordEncoder" ref="passwordEncoder" />
     </bean>
 

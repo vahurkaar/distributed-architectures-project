@@ -76,17 +76,28 @@
     <table>
         <thead>
         <tr>
-            <th style="width: 10px;">&nbsp;</th>
+            <th>Email</th>
             <th>Aadress</th>
-            <th style="width: 10px;"><a><img src="${assetPath(src: 'skin/database_add.png')}" /></a></th>
+            <th>Zip</th>
+            <th style="width: 10px;"><a id="addAddressRowButton" style="cursor: pointer;"><img src="${assetPath(src: 'skin/database_add.png')}" /></a></th>
         </tr>
         </thead>
-        <tbody style="background: #eaeaea">
-        <tr>
-            <td><a><img src="${assetPath(src: 'skin/database_edit.png')}" /></a></td>
-            <td>Jejejeee</td>
-            <td><a><img src="${assetPath(src: 'skin/database_delete.png')}" /></a></td>
-        </tr>
+        <tbody id="addressRows" style="background: #eaeaea">
+        <g:each in="${command?.addresses}" var="address" status="i">
+            <tr id="addressRow${i}" class="addressRow">
+                <td>
+                    <g:hiddenField name="command.addresses[$i].addressId" value="${address?.addressId}" />
+                    <g:textField name="command.addresses[$i].email" value="${address?.email}"/>
+                </td>
+                <td>
+                    <g:textField name="command.addresses[$i].address" value="${address?.address}"/>
+                </td>
+                <td>
+                    <g:textField style="width: 100px" name="command.addresses[$i].zip" value="${address?.zip}"/>
+                </td>
+                <td><a class="deleteAddressButton" style="cursor: pointer;"><img src="${assetPath(src: 'skin/database_delete.png')}" /></a></td>
+            </tr>
+        </g:each>
         </tbody>
     </table>
 </div>

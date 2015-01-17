@@ -1,0 +1,18 @@
+<ns2:GetCountriesResponse xmlns:ns2="http://www.ttu.ee/hajusarhitektuurid">
+    <ns2:country>
+        <ns2:id>1</ns2:id>
+        <ns2:name>Eesti</ns2:name>
+    </ns2:country>
+    <ns2:country>
+        <ns2:id>2</ns2:id>
+        <ns2:name>Läti</ns2:name>
+    </ns2:country>
+    <ns2:country>
+        <ns2:id>3</ns2:id>
+        <ns2:name>Leedu</ns2:name>
+    </ns2:country>
+    <ns2:country>
+        <ns2:id>4</ns2:id>
+        <ns2:name>Soome</ns2:name>
+    </ns2:country>
+</ns2:GetCountriesResponse>

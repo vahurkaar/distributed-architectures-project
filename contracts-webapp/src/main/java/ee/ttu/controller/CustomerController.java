@@ -7,10 +7,7 @@ import ee.ttu.xml.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -30,9 +27,10 @@ public class CustomerController {
     private Environment environment;
 
     @RequestMapping(value = "/upgrade", method = RequestMethod.POST)
-    public ModelAndView upgradeUser(@RequestParam Long id) {
+    @ResponseBody
+    public String upgradeUser(@RequestParam Long id) {
         customersService.upgradeCustomer(id);
-        return new ModelAndView("redirect:/customer/view?id=" + id);
+        return "OK";
     }
 
     @RequestMapping(value = "/view", method = RequestMethod.GET)
@@ -49,9 +47,11 @@ public class CustomerController {
         Double sum = 0.0;
         Long activeContractStatusTypeId = getContractStatusTypeByName(environment.getProperty("customer.activeContractStatusType"));
 
-        for (ContractType contract : customerForm.getContracts().getContract()) {
-            if (contract.getContractStatusType().equals(activeContractStatusTypeId)) {
-                sum += contract.getValueAmount();
+        if (customerForm.getContracts() != null) {
+            for (ContractType contract : customerForm.getContracts().getContract()) {
+                if (activeContractStatusTypeId.equals(contract.getContractStatusType())) {
+                    sum += contract.getValueAmount();
+                }
             }
         }
 
@@ -60,12 +60,7 @@ public class CustomerController {
 
     private boolean customerIsNotSuperClient(CustomerForm customerForm) {
         Long goodCustomerTypeId = getCustomerTypeId(environment.getProperty("customer.goodCustomerType"));
-
-        if (!goodCustomerTypeId.equals(customerForm.getCustomerType())) {
-            return true;
-        }
-
-        return false;
+        return !goodCustomerTypeId.equals(customerForm.getCustomerType());
     }
 
     private Long getCustomerTypeId(String name) {

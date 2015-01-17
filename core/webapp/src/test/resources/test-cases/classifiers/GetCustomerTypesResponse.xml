@@ -1,0 +1,18 @@
+<ns2:GetCustomerTypesResponse xmlns:ns2="http://www.ttu.ee/hajusarhitektuurid">
+    <ns2:customerType>
+        <ns2:id>1</ns2:id>
+        <ns2:name>Edasimüüja</ns2:name>
+    </ns2:customerType>
+    <ns2:customerType>
+        <ns2:id>2</ns2:id>
+        <ns2:name>Partner</ns2:name>
+    </ns2:customerType>
+    <ns2:customerType>
+        <ns2:id>3</ns2:id>
+        <ns2:name>Klient</ns2:name>
+    </ns2:customerType>
+    <ns2:customerType>
+        <ns2:id>4</ns2:id>
+        <ns2:name>Suurklient</ns2:name>
+    </ns2:customerType>
+</ns2:GetCustomerTypesResponse>

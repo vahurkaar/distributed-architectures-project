@@ -1,0 +1,10 @@
+<ns2:GetCustomerStateTypesResponse xmlns:ns2="http://www.ttu.ee/hajusarhitektuurid">
+    <ns2:customerStateType>
+        <ns2:id>1</ns2:id>
+        <ns2:name>Aktiivne</ns2:name>
+    </ns2:customerStateType>
+    <ns2:customerStateType>
+        <ns2:id>2</ns2:id>
+        <ns2:name>Suletud</ns2:name>
+    </ns2:customerStateType>
+</ns2:GetCustomerStateTypesResponse>

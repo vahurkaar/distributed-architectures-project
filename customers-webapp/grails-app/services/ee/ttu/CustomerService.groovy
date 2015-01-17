@@ -24,12 +24,28 @@ class CustomerService {
                         birthDate(customerInstance.birthDate?.format("yyyy-MM-dd"))
                         customerStatusType(customerInstance?.customerStatusType.customerStatusTypeId)
                         customerType(customerInstance?.customerType.customerTypeId)
-                        addresses()
+                        addresses {
+                            for (CustomerAddress addr : customerInstance.addresses) {
+                                if (addressIsNotEmpty(addr)) {
+                                    address {
+                                        id(addr.addressId)
+                                        zip(addr.zip)
+                                        address(addr.address)
+                                        email(addr.email)
+                                    }
+                                }
+                            }
+                        }
                         modifier(1)
                     }
                 }
             }
         }
+    }
+
+    private boolean addressIsNotEmpty(CustomerAddress address) {
+        return address != null && (address.id != null || StringUtils.isNotBlank(address.address) ||
+                StringUtils.isNotBlank(address.zip) || StringUtils.isNotBlank(address.email))
     }
 
     def deleteCustomer(Long customerId) {
@@ -100,7 +116,14 @@ class CustomerService {
                         classifierService.getCustomerTypeById(Long.parseLong(customerNode.customerType.text())) : null,
                 customerStatusType: StringUtils.isNotBlank(customerNode.customerStatusType.text()) ?
                         classifierService.getCustomerStatusTypeById(Long.parseLong(customerNode.customerStatusType.text())) : null,
-                modifier: customerNode.modifier?.text())
+                modifier: customerNode.modifier?.text()
+        )
+
+        customerNode.addresses.address.each { node ->
+            customer.addresses.add(new CustomerAddress(
+                    addressId: StringUtils.isNotBlank(node.id?.text()) ? Long.parseLong(node.id?.text()) : null,
+                    email: node.email?.text(), address: node.address?.text(), zip: node.zip?.text()));
+        }
 
         return customer
     }

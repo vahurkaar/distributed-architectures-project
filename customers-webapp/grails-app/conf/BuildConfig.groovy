@@ -57,6 +57,7 @@ grails.project.dependency.resolution = {
         test "org.grails:grails-datastore-test-support:1.0-grails-2.4"
         runtime "com.github.groovy-wslite:groovy-wslite:1.1.0"
         compile "net.sf.ehcache:ehcache-core:2.4.6"
+        compile "commons-collections:commons-collections:3.2.1"
     }
 
     plugins {

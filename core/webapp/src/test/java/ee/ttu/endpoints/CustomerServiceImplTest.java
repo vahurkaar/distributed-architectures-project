@@ -1,6 +1,7 @@
 package ee.ttu.endpoints;
 
 import ee.ttu.configuration.ServiceConfiguration;
+import ee.ttu.repository.EndpointTestSupport;
 import ee.ttu.repository.RepositoryTestSupport;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,17 +26,11 @@ import static org.springframework.ws.test.server.ResponseMatchers.payload;
 @WebAppConfiguration
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class,
         classes = {ServiceConfiguration.class})
-public class CustomerServiceImplTest extends RepositoryTestSupport {
-
-    @Autowired
-    private ApplicationContext applicationContext;
-
-    private MockWebServiceClient client;
+public class CustomerServiceImplTest extends EndpointTestSupport {
 
     @Before
     public void setUp() throws Exception {
-        client = MockWebServiceClient.createClient(applicationContext);
-        executeSqlScript("sql/customers/services_test.sql", false);
+        initialize("sql/customers/services_test.sql", "test-cases/customers/");
     }
 
     @Test
@@ -83,12 +78,4 @@ public class CustomerServiceImplTest extends RepositoryTestSupport {
         executeServiceTest("DeleteCustomerDoesNotExist");
     }
 
-
-    private void executeServiceTest(String testCase) throws IOException {
-        Source request = new ResourceSource(new ClassPathResource("test-cases/customers/" + testCase + "Request.xml"));
-        Source response = new ResourceSource(new ClassPathResource("test-cases/customers/" + testCase + "Response.xml"));
-
-        client.sendRequest(withPayload(request))
-                .andExpect(payload(response));
-    }
 }

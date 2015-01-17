@@ -43,8 +43,10 @@ class CustomerController {
 
     def edit() {
         Long customerId = Long.valueOf(params.customerId)
+        Customer customer = customerService.findById(customerId)
         [
-                customer: customerService.findById(customerId),
+                customer: customer,
+                command: new CustomerCommand(addresses: customer.addresses),
                 customerTypes: classifierService.getAllCustomerTypes(),
                 customerStatusTypes: classifierService.getAllCustomerStatusTypes()
         ]
@@ -57,12 +59,14 @@ class CustomerController {
         ]
     }
 
-    def save() {
+    def save(CustomerCommand command) {
         Customer customer = new Customer(params)
+        customer.setAddresses(command.addresses)
         customerValidationService.validateCustomer(customer)
         if (customer.hasErrors()) {
             render view:'create', model: [
                     customer: customer,
+                    command: command,
                     customerTypes: classifierService.getAllCustomerTypes(),
                     customerStatusTypes: classifierService.getAllCustomerStatusTypes()
             ]
@@ -80,13 +84,15 @@ class CustomerController {
         }
     }
 
-    def update() {
+    def update(CustomerCommand command) {
         Customer customer = new Customer(params)
+        customer.setAddresses(command.addresses)
         customerValidationService.validateCustomer(customer, true)
         log.error(customer.hasErrors())
         if (customer.hasErrors()) {
             render view:'edit', model: [
                     customer: customer,
+                    command: command,
                     customerTypes: classifierService.getAllCustomerTypes(),
                     customerStatusTypes: classifierService.getAllCustomerStatusTypes()
             ]
@@ -107,7 +113,7 @@ class CustomerController {
     def delete() {
         Long customerId = Long.parseLong(params.customerId)
 
-//        customerService.deleteCustomer(customerId)
+        customerService.deleteCustomer(customerId)
 
         request.withFormat {
             form multipartForm {
